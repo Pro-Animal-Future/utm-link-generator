@@ -1,0 +1,16 @@
+---
+permalink: index.html
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% capture scss -%} {% render "style.scss" %} {%- endcapture -%}
+    <style>{{ scss | scss_compile | cssmin }}</style>
+    <title>UTM Link Generator | Pro-Animal Future</title>
+  </head>
+  <body>
+    <h1>Hello world!</h1>
+  </body>
+</html>
