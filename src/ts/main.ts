@@ -1,7 +1,10 @@
-export function placeholder(): number {
-  return 0;
-}
+import { initForm } from "./form/initForm";
+import { initFormState } from "./state/FormState";
+import { subscribeLinkGenerator } from "./linkGenerator";
 
 export default function initApp(): void {
-  document.querySelector("h1")!.textContent = "Hello world!";
+  const formState = initFormState();
+  initForm(formState);
+  subscribeLinkGenerator(formState);
+  formState.initialize();
 }

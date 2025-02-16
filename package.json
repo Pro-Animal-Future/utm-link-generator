@@ -1,7 +1,7 @@
 {
   "name": "utm-link-generator",
   "version": "0.1.0",
-  "source": "index.html",
+  "source": "src/index.html",
   "type": "module",
   "scripts": {
     "start": "parcel",
