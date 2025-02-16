@@ -4,19 +4,25 @@
   "source": "index.html",
   "type": "module",
   "scripts": {
-    "build": "tsx node_modules/@11ty/eleventy/cmd.cjs --config=eleventy.config.ts",
+    "start": "parcel",
+    "build": "rm -rf dist; parcel build --detailed-report",
     "test": "playwright test",
     "typecheck": "tsc --noEmit",
     "fmt": "prettier --write .",
     "fix": "prettier --write .",
-    "lint": "prettier --check ."
+    "lint": "prettier --check .",
+    "serve-dist": "cd dist; http-server"
   },
   "license": "MIT",
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
+    "@parcel/compressor-brotli": "^2.13.3",
+    "@parcel/compressor-gzip": "^2.13.3",
+    "@parcel/transformer-sass": "^2.13.3",
     "@playwright/test": "^1.50.1",
     "@types/node": "^22.13.4",
-    "clean-css": "^5.3.3",
+    "http-server": "^14.1.1",
+    "parcel": "^2.13.3",
     "playwright": "^1.50.1",
     "prettier": "^3.5.0",
     "sass": "^1.84.0",
