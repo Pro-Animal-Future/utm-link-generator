@@ -1,0 +1,26 @@
+{
+  "name": "utm-link-generator",
+  "version": "0.1.0",
+  "source": "index.html",
+  "type": "module",
+  "scripts": {
+    "build": "tsx node_modules/@11ty/eleventy/cmd.cjs --config=eleventy.config.ts",
+    "test": "playwright test",
+    "typecheck": "tsc --noEmit",
+    "fmt": "prettier --write .",
+    "fix": "prettier --write .",
+    "lint": "prettier --check ."
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.13.4",
+    "clean-css": "^5.3.3",
+    "playwright": "^1.50.1",
+    "prettier": "^3.5.0",
+    "sass": "^1.84.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
