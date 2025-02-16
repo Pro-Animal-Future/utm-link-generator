@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UTM Link Generator | Pro-Animal Future</title>
+    <link rel="stylesheet" href="./css/style.scss" />
+  </head>
+  <body>
+    <h1>UTM link generator | Pro-Animal Future</h1>
+    <form id="utm-form">
+      <fieldset id="communication-type">
+        <input
+          type="radio"
+          id="communication-type-ad"
+          name="communication-type"
+          value="ad"
+        />
+        <label for="communication-type-ad">Advertisement</label>
+        <input
+          type="radio"
+          id="communication-type-email"
+          name="communication-type"
+          value="email"
+        />
+        <label for="communication-type-email">Email</label>
+        <input
+          type="radio"
+          id="communication-type-field"
+          name="communication-type"
+          value="field"
+        />
+        <label for="communication-type-field">Field</label>
+        <input
+          type="radio"
+          id="communication-type-social"
+          name="communication-type"
+          value="social"
+        />
+        <label for="communication-type-social">Organic social media</label>
+      </fieldset>
+    </form>
+    <p id="generated-link"></p>
+  </body>
+
+  <script type="module">
+    import initApp from "./ts/main";
+
+    window.onload = async () => {
+      await initApp();
+    };
+  </script>
+</html>
