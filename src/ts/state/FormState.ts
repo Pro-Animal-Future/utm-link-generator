@@ -6,10 +6,13 @@ export interface AdOptions {
   medium: string | undefined;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface EmailOptions {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FieldOptions {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface SocialOptions {}
 
 export interface FormState {
