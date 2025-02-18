@@ -10,8 +10,16 @@ function generateUtmString(
   return params.length > 0 ? `?${params.join("&")}` : "";
 }
 
-export function generateLink(state: FormState): string | null {
-  if (!state.url || !state.type) return null;
+type Result =
+  | { success: true; url: string }
+  | { success: false; errors: string[] };
+
+export function generateLink(state: FormState): Result {
+  const errors: string[] = [];
+  if (!state.url) {
+    errors.push("Missing URL");
+  }
+
   let medium: string | undefined;
   let source: string | undefined;
   let campaignName: string | undefined;
@@ -19,6 +27,10 @@ export function generateLink(state: FormState): string | null {
     case "ad":
       medium = state.adOptions.medium;
       campaignName = state.adOptions.campaignName;
+      if (!medium) {
+        // TODO: dry the question name in config
+        errors.push(`Missing "Medium"`);
+      }
       break;
     case "email":
       medium = "email";
@@ -35,16 +47,17 @@ export function generateLink(state: FormState): string | null {
       campaignName = state.socialOptions.campaignName;
       break;
     default:
-      throw new Error(`Unexpected type: ${state.type}`);
+      errors.push("Missing communication type");
   }
 
-  if (!medium) return null;
   const queryParam = generateUtmString({
     medium,
     source,
     campaign: campaignName,
   });
-  return `${state.url}${queryParam}`;
+  return errors.length
+    ? { success: false, errors }
+    : { success: true, url: `${state.url}${queryParam}` };
 }
 
 export function subscribeLinkGenerator(formState: Observable<FormState>): void {
@@ -52,7 +65,7 @@ export function subscribeLinkGenerator(formState: Observable<FormState>): void {
     "generated-link",
   ) as HTMLParagraphElement;
   formState.subscribe((state) => {
-    const link = generateLink(state) ?? "Cannot generate link";
-    element.textContent = link;
+    const result = generateLink(state);
+    element.textContent = result.success ? result.url : "Cannot generate link";
   });
 }
