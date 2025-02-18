@@ -108,27 +108,105 @@ function initAdOptions(
       adOptions: { ...priorState.adOptions, medium: value },
     }),
   );
+
+  initRadioGroup(
+    container,
+    formState,
+    {
+      id: "ad-campaign-name",
+      label: "Primary purpose",
+      options: OPTIONS.ad.campaignName,
+    },
+    (value, priorState) => ({
+      adOptions: { ...priorState.adOptions, campaignName: value },
+    }),
+  );
 }
 
 function initEmailOptions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  initCommunicationTypeDiv(form, formState, "email");
+  const container = initCommunicationTypeDiv(form, formState, "email");
+
+  initRadioGroup(
+    container,
+    formState,
+    {
+      id: "email-source",
+      label: "Source",
+      options: OPTIONS.email.source,
+    },
+    (value, priorState) => ({
+      emailOptions: { ...priorState.emailOptions, source: value },
+    }),
+  );
 }
 
 function initFieldOptions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  initCommunicationTypeDiv(form, formState, "field");
+  const container = initCommunicationTypeDiv(form, formState, "field");
+
+  initRadioGroup(
+    container,
+    formState,
+    {
+      id: "field-source",
+      label: "Source",
+      options: OPTIONS.field.source,
+    },
+    (value, priorState) => ({
+      fieldOptions: { ...priorState.fieldOptions, source: value },
+    }),
+  );
+
+  initRadioGroup(
+    container,
+    formState,
+    {
+      id: "field-campaign-name",
+      label: "Primary purpose",
+      options: OPTIONS.field.campaignName,
+    },
+    (value, priorState) => ({
+      fieldOptions: { ...priorState.fieldOptions, campaignName: value },
+    }),
+  );
 }
 
 function initSocialOptions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  initCommunicationTypeDiv(form, formState, "social");
+  const container = initCommunicationTypeDiv(form, formState, "social");
+
+  initRadioGroup(
+    container,
+    formState,
+    {
+      id: "social-source",
+      label: "Source",
+      options: OPTIONS.social.source,
+    },
+    (value, priorState) => ({
+      socialOptions: { ...priorState.socialOptions, source: value },
+    }),
+  );
+
+  initRadioGroup(
+    container,
+    formState,
+    {
+      id: "social-campaign-name",
+      label: "Account name",
+      options: OPTIONS.social.campaignName,
+    },
+    (value, priorState) => ({
+      socialOptions: { ...priorState.socialOptions, campaignName: value },
+    }),
+  );
 }
 
 export function initForm(formState: Observable<FormState>): void {

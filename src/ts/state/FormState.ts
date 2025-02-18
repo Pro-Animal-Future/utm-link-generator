@@ -4,16 +4,22 @@ export type CommunicationType = "ad" | "email" | "field" | "social";
 
 export interface AdOptions {
   medium: string | undefined;
+  campaignName: string | undefined;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface EmailOptions {}
+export interface EmailOptions {
+  source: string | undefined;
+}
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface FieldOptions {}
+export interface FieldOptions {
+  source: string | undefined;
+  campaignName: string | undefined;
+}
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface SocialOptions {}
+export interface SocialOptions {
+  source: string | undefined;
+  campaignName: string | undefined;
+}
 
 export interface FormState {
   url: string | undefined;
@@ -28,9 +34,12 @@ export function initFormState(): Observable<FormState> {
   return new Observable<FormState>("form state", {
     url: undefined,
     type: undefined,
-    adOptions: { medium: undefined },
-    emailOptions: {},
-    fieldOptions: {},
-    socialOptions: {},
+    adOptions: {
+      medium: undefined,
+      campaignName: undefined,
+    },
+    emailOptions: { source: undefined },
+    fieldOptions: { source: undefined, campaignName: undefined },
+    socialOptions: { source: undefined, campaignName: undefined },
   });
 }
