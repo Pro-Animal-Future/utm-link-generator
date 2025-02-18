@@ -13,11 +13,11 @@ export interface RadioGroup {
 export function generateRadioGroup(request: RadioGroup): HTMLFieldSetElement {
   const fieldSet = document.createElement("fieldset");
   fieldSet.id = request.id;
-  fieldSet.classList.add("radio-fieldset")
+  fieldSet.classList.add("radio-fieldset");
 
   const legend = document.createElement("legend");
   legend.textContent = request.label;
-  legend.classList.add("radio-legend")
+  legend.classList.add("radio-legend");
   fieldSet.appendChild(legend);
 
   request.options.forEach((option) => {

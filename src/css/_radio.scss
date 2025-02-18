@@ -8,7 +8,7 @@
 .radio-fieldset {
   border: none;
   padding: 0;
-  margin: spacing.$container-edge-spacing 0;
+  margin: 15px 0;
 }
 
 .radio-input {
@@ -30,8 +30,8 @@
   border-radius: borders.$border-radius;
 
   min-height: spacing.$min-touch-target;
-  margin: spacing.$element-gap 0;
-  padding: spacing.$element-gap spacing.$container-edge-spacing spacing.$element-gap 40px;
+  margin: 10px 0;
+  padding: 10px 15px 10px 40px;
 
   position: relative;
   display: flex;
@@ -56,12 +56,14 @@
 }
 
 .radio-input:checked + .radio-label {
-  background-color: rgba(0,94,162,.1);
-  border-color: #005ea2;
+  background-color: colors.$blue-translucent;
+  border-color: colors.$blue;
 
   &::before {
-    box-shadow: 0 0 0 2px #005ea2,inset 0 0 0 2px #fff;
-    background-color: #005ea2;
+    box-shadow:
+      0 0 0 borders.$border-thickness colors.$blue,
+      inset 0 0 0 borders.$border-thickness colors.$white;
+    background-color: colors.$blue;
   }
 }
 
