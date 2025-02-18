@@ -13,10 +13,19 @@ test.describe("generateLink()", () => {
     type: "email",
     adOptions: {
       medium: "paid_social",
+      campaignName: "lead_gen",
     },
-    emailOptions: {},
-    fieldOptions: {},
-    socialOptions: {},
+    emailOptions: {
+      source: "mailchimp",
+    },
+    fieldOptions: {
+      source: "poster",
+      campaignName: "lead_gen",
+    },
+    socialOptions: {
+      source: "instagram",
+      campaignName: "proanimaldc",
+    },
   };
 
   test("missing URL and type", () => {
@@ -26,26 +35,35 @@ test.describe("generateLink()", () => {
 
   test("ad options", () => {
     const ad: FormState = { ...DEFAULT, type: "ad" };
-    expect(generateLink(ad)).toEqual(`${DEFAULT_URL}?utm_medium=paid_social`);
+    expect(generateLink(ad)).toEqual(
+      `${DEFAULT_URL}?utm_medium=paid_social&utm_campaign=lead_gen`,
+    );
     expect(
-      generateLink({ ...ad, adOptions: { medium: undefined } }),
+      generateLink({
+        ...ad,
+        adOptions: { ...DEFAULT.adOptions, medium: undefined },
+      }),
     ).toBeNull();
   });
 
   test("email options", () => {
     const email: FormState = { ...DEFAULT, type: "email" };
-    expect(generateLink(email)).toEqual(`${DEFAULT_URL}?utm_medium=email`);
+    expect(generateLink(email)).toEqual(
+      `${DEFAULT_URL}?utm_medium=email&utm_source=mailchimp`,
+    );
   });
 
   test("field options", () => {
     const field: FormState = { ...DEFAULT, type: "field" };
-    expect(generateLink(field)).toEqual(`${DEFAULT_URL}?utm_medium=field`);
+    expect(generateLink(field)).toEqual(
+      `${DEFAULT_URL}?utm_medium=field&utm_source=poster&utm_campaign=lead_gen`,
+    );
   });
 
   test("social media options", () => {
     const social: FormState = { ...DEFAULT, type: "social" };
     expect(generateLink(social)).toEqual(
-      `${DEFAULT_URL}?utm_medium=organic_social`,
+      `${DEFAULT_URL}?utm_medium=organic_social&utm_source=instagram&utm_campaign=proanimaldc`,
     );
   });
 });
