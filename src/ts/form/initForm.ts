@@ -2,6 +2,31 @@ import { CommunicationType, FormState } from "../state/FormState";
 import Observable from "../state/Observable";
 import { generateRadioGroup } from "./radio";
 
+function initUrl(
+  form: HTMLFormElement,
+  formState: Observable<FormState>,
+): void {
+  const container = document.createElement("div");
+  container.classList.add("url-container");
+  form.appendChild(container);
+
+  const label = document.createElement("label");
+  label.textContent = "Your URL";
+  label.htmlFor = "url-input";
+  container.appendChild(label);
+
+  const input = document.createElement("input");
+  input.type = "url";
+  input.id = "url-input";
+  input.required = true;
+  container.appendChild(input);
+
+  input.addEventListener("change", (e) => {
+    if (!(e.target instanceof HTMLInputElement)) return;
+    formState.setValue({ ...formState.getValue(), url: e.target.value });
+  });
+}
+
 function initCommunicationTypeQuestion(
   form: HTMLFormElement,
   formState: Observable<FormState>,
@@ -110,6 +135,7 @@ function initSocialOptions(
 
 export function initForm(formState: Observable<FormState>): void {
   const form = document.getElementById("utm-form") as HTMLFormElement;
+  initUrl(form, formState);
   initCommunicationTypeQuestion(form, formState);
   initAdOptions(form, formState);
   initEmailOptions(form, formState);
