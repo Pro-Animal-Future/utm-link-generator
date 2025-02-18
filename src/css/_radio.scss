@@ -29,6 +29,7 @@
   border: borders.$component-border;
   border-radius: borders.$border-radius;
 
+  max-width: 375px;
   min-height: spacing.$min-touch-target;
   margin: 10px 0;
   padding: 10px 15px 10px 40px;

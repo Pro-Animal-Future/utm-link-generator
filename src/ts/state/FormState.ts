@@ -26,7 +26,7 @@ export interface FormState {
 
 export function initFormState(): Observable<FormState> {
   return new Observable<FormState>("form state", {
-    url: "https://proanimal.org",
+    url: undefined,
     type: undefined,
     adOptions: { medium: undefined },
     emailOptions: {},
