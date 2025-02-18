@@ -6,5 +6,9 @@ export default function initApp(): void {
   const formState = initFormState();
   initForm(formState);
   subscribeLinkGenerator(formState);
+
+  // Debugging
+  formState.subscribe((v) => console.log(v));
+
   formState.initialize();
 }
