@@ -1,0 +1,74 @@
+@use "theme/borders";
+@use "theme/colors";
+@use "theme/spacing";
+@use "theme/typography";
+
+/* Design inspired by https://designsystem.digital.gov/components/radio-buttons/. */
+
+.radio-fieldset {
+  border: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.radio-input {
+  position: absolute;
+  left: -999em;
+  right: auto;
+}
+
+.radio-legend {
+  font-size: typography.$font-size-lg;
+  font-weight: 500;
+}
+
+.radio-label {
+  cursor: pointer;
+  font-size: typography.$font-size-md;
+
+  border: borders.$component-border;
+  border-radius: borders.$border-radius;
+
+  min-height: spacing.$min-touch-target;
+  margin: 10px 0;
+  padding: 10px 15px 10px 40px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    background-color: colors.$hover-white;
+  }
+
+  &::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    left: 10px;
+    margin-top: 1px;
+    margin-left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 99rem;
+    box-shadow: 0 0 0 borders.$border-thickness colors.$black-translucent;
+  }
+}
+
+.radio-input:checked + .radio-label {
+  background-color: colors.$blue-translucent;
+  border-color: colors.$blue;
+
+  &::before {
+    box-shadow:
+      0 0 0 borders.$border-thickness colors.$blue,
+      inset 0 0 0 borders.$border-thickness colors.$white;
+    background-color: colors.$blue;
+  }
+}
+
+.radio-description {
+  display: block;
+  margin-top: 8px;
+  font-size: typography.$font-size-base;
+}
