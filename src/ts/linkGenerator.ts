@@ -1,3 +1,4 @@
+import { OPTIONS } from "./config/options";
 import { FormState } from "./state/FormState";
 import Observable from "./state/Observable";
 
@@ -26,28 +27,45 @@ export function generateLink(state: FormState): Result {
   switch (state.type) {
     case "ad":
       medium = state.adOptions.medium;
-      campaignName = state.adOptions.campaignName;
       if (!medium) {
-        // TODO: dry the question name in config
-        errors.push(`Missing "Medium"`);
+        errors.push(`Missing "${OPTIONS.ad.medium.label}"`);
+      }
+      campaignName = state.adOptions.campaignName;
+      if (!campaignName) {
+        errors.push(`Missing "${OPTIONS.ad.campaignName.label}"`);
       }
       break;
     case "email":
       medium = "email";
       source = state.emailOptions.source;
+      if (!source) {
+        errors.push(`Missing "${OPTIONS.email.source.label}"`);
+      }
       break;
     case "field":
       medium = "field";
       source = state.fieldOptions.source;
+      if (!source) {
+        errors.push(`Missing "${OPTIONS.field.source.label}"`);
+      }
       campaignName = state.fieldOptions.campaignName;
+      if (!campaignName) {
+        errors.push(`Missing "${OPTIONS.field.campaignName.label}"`);
+      }
       break;
     case "social":
       medium = "organic_social";
       source = state.socialOptions.source;
+      if (!source) {
+        errors.push(`Missing "${OPTIONS.social.source.label}"`);
+      }
       campaignName = state.socialOptions.campaignName;
+      if (!campaignName) {
+        errors.push(`Missing "${OPTIONS.social.campaignName.label}"`);
+      }
       break;
     default:
-      errors.push("Missing communication type");
+      errors.push(`Missing "${OPTIONS.communicationType.label}"`);
   }
 
   const queryParam = generateUtmString({
