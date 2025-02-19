@@ -25,10 +25,18 @@ function initRadioGroup(
   formState: Observable<FormState>,
   request: RadioGroup,
   updateFn: UpdateFormStateFunction,
+  hideFn?: (state: FormState) => boolean,
 ): void {
   const group = generateRadioGroup(request);
   group.addEventListener("change", updateFormState(formState)(updateFn));
   parent.appendChild(group);
+
+  if (hideFn) {
+    formState.subscribe((state) => {
+      const isHidden = hideFn(state);
+      group.hidden = isHidden;
+    });
+  }
 }
 
 function initUrl(
@@ -91,15 +99,61 @@ function initAdOptions(
     container,
     formState,
     OPTIONS.ad.medium,
-    (value, priorState) => ({
-      adOptions: { ...priorState.adOptions, medium: value },
-    }),
+    (value, priorState) => {
+      let source: string | undefined;
+      switch (value) {
+        case "paid_mail":
+          source = "mailer";
+          break;
+        case "paid_sms":
+          source = "scaletowin";
+          break;
+        case "paid_tv":
+          source = "tv";
+          break;
+        default:
+          source = undefined;
+          break;
+      }
+      return {
+        adOptions: { ...priorState.adOptions, medium: value, source },
+      };
+    },
   );
 
   initRadioGroup(
     container,
     formState,
+    OPTIONS.ad.source.search,
+    (value, priorState) => ({
+      adOptions: { ...priorState.adOptions, source: value },
+    }),
+    (state) => state.adOptions.medium !== "paid_search",
+  );
 
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.ad.source.social,
+    (value, priorState) => ({
+      adOptions: { ...priorState.adOptions, source: value },
+    }),
+    (state) => state.adOptions.medium !== "paid_social",
+  );
+
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.ad.source.outOfHome,
+    (value, priorState) => ({
+      adOptions: { ...priorState.adOptions, source: value },
+    }),
+    (state) => state.adOptions.medium !== "paid_ooh",
+  );
+
+  initRadioGroup(
+    container,
+    formState,
     OPTIONS.ad.campaignName,
     (value, priorState) => ({
       adOptions: { ...priorState.adOptions, campaignName: value },

@@ -13,6 +13,7 @@ test.describe("generateLink()", () => {
     type: "email",
     adOptions: {
       medium: "paid_social",
+      source: "meta",
       campaignName: "lead_gen",
     },
     emailOptions: {
@@ -46,17 +47,33 @@ test.describe("generateLink()", () => {
     const ad: FormState = { ...DEFAULT, type: "ad" };
     expect(generateLink(ad)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_social&utm_campaign=lead_gen`,
+      url: `${DEFAULT_URL}?utm_medium=paid_social&utm_source=meta&utm_campaign=lead_gen`,
     });
 
     expect(
       generateLink({
         ...ad,
-        adOptions: { medium: undefined, campaignName: undefined },
+        adOptions: {
+          medium: undefined,
+          source: undefined,
+          campaignName: undefined,
+        },
       }),
     ).toEqual({
       success: false,
+      // Note that we don't complain about `source` because it depends on the medium.
       errors: ['Missing "Medium"', 'Missing "Primary purpose"'],
+    });
+
+    /// Once the `medium` is set, we expect `source` to also be set.
+    expect(
+      generateLink({
+        ...ad,
+        adOptions: { ...ad.adOptions, source: undefined },
+      }),
+    ).toEqual({
+      success: false,
+      errors: ['Missing "Source"'],
     });
   });
 

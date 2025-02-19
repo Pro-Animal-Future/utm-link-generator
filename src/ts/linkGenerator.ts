@@ -30,6 +30,10 @@ export function generateLink(state: FormState): Result {
       if (!medium) {
         errors.push(`Missing "${OPTIONS.ad.medium.label}"`);
       }
+      source = state.adOptions.source;
+      if (medium && !source) {
+        errors.push(`Missing "${OPTIONS.ad.source.search.label}"`);
+      }
       campaignName = state.adOptions.campaignName;
       if (!campaignName) {
         errors.push(`Missing "${OPTIONS.ad.campaignName.label}"`);
