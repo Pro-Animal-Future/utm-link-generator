@@ -78,12 +78,35 @@ export function generateLink(state: FormState): Result {
     : { success: true, url: `${state.url}${queryParam}` };
 }
 
+function generateSuccess(url: string): HTMLElement[] {
+  const p = document.createElement("p");
+  p.textContent = url;
+  return [p];
+}
+
+function generateErrors(errors: string[]): HTMLElement[] {
+  const p = document.createElement("p");
+  p.textContent = "Cannot generate link:";
+
+  const ul = document.createElement("ul");
+  errors.forEach((err) => {
+    const li = document.createElement("li");
+    li.textContent = err;
+    ul.appendChild(li);
+  });
+  return [p, ul];
+}
+
 export function subscribeLinkGenerator(formState: Observable<FormState>): void {
-  const element = document.getElementById(
-    "generated-link",
-  ) as HTMLParagraphElement;
+  const container = document.getElementById(
+    "result-container",
+  ) as HTMLDivElement;
   formState.subscribe((state) => {
     const result = generateLink(state);
-    element.textContent = result.success ? result.url : "Cannot generate link";
+    if (result.success) {
+      container.replaceChildren(...generateSuccess(result.url));
+    } else {
+      container.replaceChildren(...generateErrors(result.errors));
+    }
   });
 }
