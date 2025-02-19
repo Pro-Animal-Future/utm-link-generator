@@ -1,0 +1,5 @@
+@use "theme/typography";
+
+.result-container {
+  font-size: typography.$font-size-md;
+}
