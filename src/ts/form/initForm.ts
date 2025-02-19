@@ -60,18 +60,9 @@ function initCommunicationTypeQuestion(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  initRadioGroup(
-    form,
-    formState,
-    {
-      id: "communication-type",
-      label: "Communication type",
-      options: OPTIONS.communicationType,
-    },
-    (value) => ({
-      type: value as CommunicationType,
-    }),
-  );
+  initRadioGroup(form, formState, OPTIONS.communicationType, (value) => ({
+    type: value as CommunicationType,
+  }));
 }
 
 function initCommunicationTypeDiv(
@@ -99,11 +90,7 @@ function initAdOptions(
   initRadioGroup(
     container,
     formState,
-    {
-      id: "ad-medium",
-      label: "Medium",
-      options: OPTIONS.ad.medium,
-    },
+    OPTIONS.ad.medium,
     (value, priorState) => ({
       adOptions: { ...priorState.adOptions, medium: value },
     }),
@@ -112,11 +99,8 @@ function initAdOptions(
   initRadioGroup(
     container,
     formState,
-    {
-      id: "ad-campaign-name",
-      label: "Primary purpose",
-      options: OPTIONS.ad.campaignName,
-    },
+
+    OPTIONS.ad.campaignName,
     (value, priorState) => ({
       adOptions: { ...priorState.adOptions, campaignName: value },
     }),
@@ -132,11 +116,8 @@ function initEmailOptions(
   initRadioGroup(
     container,
     formState,
-    {
-      id: "email-source",
-      label: "Source",
-      options: OPTIONS.email.source,
-    },
+
+    OPTIONS.email.source,
     (value, priorState) => ({
       emailOptions: { ...priorState.emailOptions, source: value },
     }),
@@ -152,11 +133,8 @@ function initFieldOptions(
   initRadioGroup(
     container,
     formState,
-    {
-      id: "field-source",
-      label: "Source",
-      options: OPTIONS.field.source,
-    },
+
+    OPTIONS.field.source,
     (value, priorState) => ({
       fieldOptions: { ...priorState.fieldOptions, source: value },
     }),
@@ -165,11 +143,8 @@ function initFieldOptions(
   initRadioGroup(
     container,
     formState,
-    {
-      id: "field-campaign-name",
-      label: "Primary purpose",
-      options: OPTIONS.field.campaignName,
-    },
+
+    OPTIONS.field.campaignName,
     (value, priorState) => ({
       fieldOptions: { ...priorState.fieldOptions, campaignName: value },
     }),
@@ -185,11 +160,8 @@ function initSocialOptions(
   initRadioGroup(
     container,
     formState,
-    {
-      id: "social-source",
-      label: "Source",
-      options: OPTIONS.social.source,
-    },
+
+    OPTIONS.social.source,
     (value, priorState) => ({
       socialOptions: { ...priorState.socialOptions, source: value },
     }),
@@ -198,11 +170,8 @@ function initSocialOptions(
   initRadioGroup(
     container,
     formState,
-    {
-      id: "social-campaign-name",
-      label: "Account name",
-      options: OPTIONS.social.campaignName,
-    },
+
+    OPTIONS.social.campaignName,
     (value, priorState) => ({
       socialOptions: { ...priorState.socialOptions, campaignName: value },
     }),
