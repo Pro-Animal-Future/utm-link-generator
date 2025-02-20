@@ -1,5 +1,5 @@
 import { OPTIONS } from "./config/options";
-import { FormState } from "./state/FormState";
+import { AdOptions, FormState } from "./state/FormState";
 import Observable from "./state/Observable";
 
 function generateUtmString(
@@ -14,6 +14,27 @@ function generateUtmString(
 type Result =
   | { success: true; url: string }
   | { success: false; errors: string[] };
+
+function determineAdSource(adOptions: AdOptions): string | undefined {
+  switch (adOptions.medium) {
+    case undefined:
+      return undefined;
+    case "paid_mail":
+      return "mailer";
+    case "paid_sms":
+      return "scaletowin";
+    case "paid_tv":
+      return "tv";
+    case "paid_social":
+      return adOptions.source.social;
+    case "paid_search":
+      return adOptions.source.search;
+    case "paid_ooh":
+      return adOptions.source.outOfHome;
+    default:
+      throw new Error(`Unexpected medium "${adOptions.medium}"`);
+  }
+}
 
 export function generateLink(state: FormState): Result {
   const errors: string[] = [];
@@ -30,7 +51,7 @@ export function generateLink(state: FormState): Result {
       if (!medium) {
         errors.push(`Missing "${OPTIONS.ad.medium.label}"`);
       }
-      source = state.adOptions.source;
+      source = determineAdSource(state.adOptions);
       if (medium && !source) {
         errors.push(`Missing "${OPTIONS.ad.source.search.label}"`);
       }

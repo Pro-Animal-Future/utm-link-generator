@@ -13,7 +13,11 @@ test.describe("generateLink()", () => {
     type: "email",
     adOptions: {
       medium: "paid_social",
-      source: "meta",
+      source: {
+        social: "meta",
+        search: undefined,
+        outOfHome: undefined,
+      },
       campaignName: "lead_gen",
     },
     emailOptions: {
@@ -55,7 +59,11 @@ test.describe("generateLink()", () => {
         ...ad,
         adOptions: {
           medium: undefined,
-          source: undefined,
+          source: {
+            search: undefined,
+            social: undefined,
+            outOfHome: undefined,
+          },
           campaignName: undefined,
         },
       }),
@@ -69,11 +77,29 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...ad,
-        adOptions: { ...ad.adOptions, source: undefined },
+        adOptions: {
+          ...ad.adOptions,
+          source: {
+            social: undefined,
+            search: undefined,
+            outOfHome: undefined,
+          },
+        },
       }),
     ).toEqual({
       success: false,
       errors: ['Missing "Source"'],
+    });
+
+    // Certain mediums imply the `source`.
+    expect(
+      generateLink({
+        ...ad,
+        adOptions: { ...ad.adOptions, medium: "paid_tv" },
+      }),
+    ).toEqual({
+      success: true,
+      url: `${DEFAULT_URL}?utm_medium=paid_tv&utm_source=tv&utm_campaign=lead_gen`,
     });
   });
 

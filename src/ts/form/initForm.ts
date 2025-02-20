@@ -99,26 +99,9 @@ function initAdOptions(
     container,
     formState,
     OPTIONS.ad.medium,
-    (value, priorState) => {
-      let source: string | undefined;
-      switch (value) {
-        case "paid_mail":
-          source = "mailer";
-          break;
-        case "paid_sms":
-          source = "scaletowin";
-          break;
-        case "paid_tv":
-          source = "tv";
-          break;
-        default:
-          source = undefined;
-          break;
-      }
-      return {
-        adOptions: { ...priorState.adOptions, medium: value, source },
-      };
-    },
+    (value, priorState) => ({
+      adOptions: { ...priorState.adOptions, medium: value },
+    }),
   );
 
   initRadioGroup(
@@ -126,7 +109,10 @@ function initAdOptions(
     formState,
     OPTIONS.ad.source.search,
     (value, priorState) => ({
-      adOptions: { ...priorState.adOptions, source: value },
+      adOptions: {
+        ...priorState.adOptions,
+        source: { ...priorState.adOptions.source, search: value },
+      },
     }),
     (state) => state.adOptions.medium !== "paid_search",
   );
@@ -136,7 +122,10 @@ function initAdOptions(
     formState,
     OPTIONS.ad.source.social,
     (value, priorState) => ({
-      adOptions: { ...priorState.adOptions, source: value },
+      adOptions: {
+        ...priorState.adOptions,
+        source: { ...priorState.adOptions.source, social: value },
+      },
     }),
     (state) => state.adOptions.medium !== "paid_social",
   );
@@ -146,7 +135,10 @@ function initAdOptions(
     formState,
     OPTIONS.ad.source.outOfHome,
     (value, priorState) => ({
-      adOptions: { ...priorState.adOptions, source: value },
+      adOptions: {
+        ...priorState.adOptions,
+        source: { ...priorState.adOptions.source, outOfHome: value },
+      },
     }),
     (state) => state.adOptions.medium !== "paid_ooh",
   );
