@@ -4,6 +4,11 @@ export type CommunicationType = "ad" | "email" | "field" | "social";
 
 export interface AdOptions {
   medium: string | undefined;
+  source: {
+    social: string | undefined;
+    search: string | undefined;
+    outOfHome: string | undefined;
+  };
   campaignName: string | undefined;
 }
 
@@ -36,6 +41,11 @@ export function initFormState(): Observable<FormState> {
     type: undefined,
     adOptions: {
       medium: undefined,
+      source: {
+        social: undefined,
+        search: undefined,
+        outOfHome: undefined,
+      },
       campaignName: undefined,
     },
     emailOptions: { source: undefined },

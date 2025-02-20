@@ -17,12 +17,10 @@ export const OPTIONS = {
         {
           value: "paid_social",
           label: "Social media ads",
-          description: "Meta, Reddit, etc.",
         },
         {
           value: "paid_search",
           label: "Search ads",
-          description: "Google, Bing, etc.",
         },
         {
           value: "paid_ooh",
@@ -32,11 +30,34 @@ export const OPTIONS = {
         {
           value: "paid_sms",
           label: "Text blasts",
-          description: "E.g. Scale to Win",
         },
         { value: "paid_mail", label: "Mass-mailed voter mailers" },
         { value: "paid_tv", label: "TV commercials" },
       ],
+    },
+    source: {
+      social: {
+        id: "ad-source-social",
+        label: "Source",
+        options: [
+          { value: "meta", label: "Meta" },
+          { value: "reddit", label: "Reddit" },
+          { value: "youtube", label: "YouTube" },
+        ],
+      },
+      search: {
+        id: "ad-source-search",
+        label: "Source",
+        options: [
+          { value: "google", label: "Google" },
+          { value: "bing", label: "Bing" },
+        ],
+      },
+      outOfHome: {
+        id: "ad-source-out-of-home",
+        label: "Source",
+        options: [{ value: "billboard", label: "Billboard" }],
+      },
     },
     campaignName: {
       id: "ad-campaign-name",
