@@ -60,7 +60,7 @@ function initUrl(
 
   input.addEventListener(
     "change",
-    updateFormState(formState)((value) => ({ url: value })),
+    updateFormState(formState)((value) => ({ url: value.trim() })),
   );
 }
 

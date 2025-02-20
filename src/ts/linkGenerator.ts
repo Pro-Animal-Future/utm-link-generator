@@ -15,6 +15,23 @@ type Result =
   | { success: true; url: string }
   | { success: false; errors: string[] };
 
+function validateUrl(url: string | undefined): Result {
+  if (!url) {
+    return { success: false, errors: ["Missing URL"] };
+  } else {
+    if (!url.startsWith("https://")) {
+      return { success: false, errors: ["URL must start with https://"] };
+    }
+    try {
+      new URL(url);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_) {
+      return { success: false, errors: ["Invalid URL"] };
+    }
+  }
+  return { success: true, url: url };
+}
+
 function determineAdSource(adOptions: AdOptions): string | undefined {
   switch (adOptions.medium) {
     case undefined:
@@ -38,8 +55,10 @@ function determineAdSource(adOptions: AdOptions): string | undefined {
 
 export function generateLink(state: FormState): Result {
   const errors: string[] = [];
-  if (!state.url) {
-    errors.push("Missing URL");
+
+  const urlResult = validateUrl(state.url);
+  if (!urlResult.success) {
+    errors.push(...urlResult.errors);
   }
 
   let medium: string | undefined;

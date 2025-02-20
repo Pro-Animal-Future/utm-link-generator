@@ -33,10 +33,20 @@ test.describe("generateLink()", () => {
     },
   };
 
-  test("missing URL", () => {
+  test("URL", () => {
     expect(generateLink({ ...DEFAULT, url: undefined })).toEqual({
       success: false,
       errors: ["Missing URL"],
+    });
+    expect(generateLink({ ...DEFAULT, url: "proanimal.org" })).toEqual({
+      success: false,
+      errors: ["URL must start with https://"],
+    });
+    expect(
+      generateLink({ ...DEFAULT, url: "https://proanimal.org a13b" }),
+    ).toEqual({
+      success: false,
+      errors: ["Invalid URL"],
     });
   });
 
