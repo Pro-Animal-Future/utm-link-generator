@@ -13,10 +13,26 @@ const updateFormState =
   (updateFn: UpdateFormStateFunction) =>
   (e: Event) => {
     if (!(e.target instanceof HTMLInputElement)) return;
+
+    // Normally, we update with the direct value of the input field.
+    //
+    // However, radio buttons with text input are tricky that we
+    // need to instead always use the text input. For example, if you
+    // click a radio button with a text input, we should use
+    // the value from its text input rather than from the radio button itself.
+    let value = e.target.value;
+    if (e.target.type === "radio" && e.target.checked) {
+      const textInput =
+        e.target.parentElement?.querySelector(".radio-text-input");
+      if (textInput instanceof HTMLInputElement) {
+        value = textInput.value;
+      }
+    }
+
     const priorState = formState.getValue();
     formState.setValue({
       ...priorState,
-      ...updateFn(e.target.value, priorState),
+      ...updateFn(value, priorState),
     });
   };
 
@@ -28,7 +44,10 @@ function initRadioGroup(
   hideFn?: (state: FormState) => boolean,
 ): void {
   const group = generateRadioGroup(request);
-  group.addEventListener("change", updateFormState(formState)(updateFn));
+
+  // We use 'input' rather than 'change' for better responsiveness with
+  // radio options with text input.
+  group.addEventListener("input", updateFormState(formState)(updateFn));
   parent.appendChild(group);
 
   if (hideFn) {
@@ -59,7 +78,7 @@ function initUrl(
   container.appendChild(input);
 
   input.addEventListener(
-    "change",
+    "input",
     updateFormState(formState)((value) => ({ url: value.trim() })),
   );
 }
