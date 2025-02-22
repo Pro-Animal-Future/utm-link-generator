@@ -59,7 +59,7 @@ function initUrl(
   container.appendChild(input);
 
   input.addEventListener(
-    "change",
+    "input",
     updateFormState(formState)((value) => ({ url: value.trim() })),
   );
 }

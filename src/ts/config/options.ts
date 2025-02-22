@@ -82,7 +82,11 @@ export const OPTIONS = {
     campaignName: {
       id: "organic-social-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      options: ACCOUNT_NAME_OPTIONS,
+      options: [
+        ...ACCOUNT_NAME_OPTIONS,
+        { value: "Partner handle:", textInput: true },
+        { value: "FB/Nextdoor group name:", textInput: true },
+      ],
     },
   },
   paidMail: {
