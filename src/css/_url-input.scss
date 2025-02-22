@@ -2,10 +2,10 @@
 @use "theme/typography";
 
 .url-container {
-  font-size: typography.$font-size-lg;
   margin-bottom: 15px;
 
   label {
+    font-size: typography.$font-size-lg;
     font-weight: 500;
   }
 
