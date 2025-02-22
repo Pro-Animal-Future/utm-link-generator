@@ -44,10 +44,9 @@ export function generateLink(state: FormState): Result {
     errors.push(...urlResult.errors);
   }
 
-  const medium = state.medium;
   let source: string | undefined;
   let campaignName: string | undefined;
-  switch (medium) {
+  switch (state.medium) {
     case undefined:
       errors.push(`Missing "${MEDIUM_LABEL}"`);
       break;
@@ -81,20 +80,20 @@ export function generateLink(state: FormState): Result {
       break;
     default:
       errors.push(
-        `Unrecognized "${MEDIUM_LABEL}", meaning a programming bug: ${medium}`,
+        `Unrecognized "${MEDIUM_LABEL}", meaning a programming bug: ${state.medium}`,
       );
   }
 
   // Check for required fields.
-  if (medium) {
-    if (!source && medium !== "paid_mail") {
+  if (state.medium) {
+    if (!source && state.medium !== "paid_mail") {
       errors.push(`Missing "${SOURCE_LABEL}"`);
     }
     if (!campaignName) errors.push(`Missing "${CAMPAIGN_NAME_LABEL}"`);
   }
 
   const queryParam = generateUtmString({
-    medium,
+    medium: state.medium,
     source,
     campaign: campaignName,
   });
