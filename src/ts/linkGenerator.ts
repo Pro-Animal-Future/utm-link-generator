@@ -1,5 +1,9 @@
-import { OPTIONS } from "./config/options";
-import { AdOptions, FormState } from "./state/FormState";
+import {
+  CAMPAIGN_NAME_LABEL,
+  MEDIUM_LABEL,
+  SOURCE_LABEL,
+} from "./config/options";
+import { FormState } from "./state/FormState";
 import Observable from "./state/Observable";
 
 function generateUtmString(
@@ -32,27 +36,6 @@ function validateUrl(url: string | undefined): Result {
   return { success: true, url: url };
 }
 
-function determineAdSource(adOptions: AdOptions): string | undefined {
-  switch (adOptions.medium) {
-    case undefined:
-      return undefined;
-    case "paid_mail":
-      return "mailer";
-    case "paid_sms":
-      return "scaletowin";
-    case "paid_tv":
-      return "tv";
-    case "paid_social":
-      return adOptions.source.social;
-    case "paid_search":
-      return adOptions.source.search;
-    case "paid_ooh":
-      return adOptions.source.outOfHome;
-    default:
-      throw new Error(`Unexpected medium "${adOptions.medium}"`);
-  }
-}
-
 export function generateLink(state: FormState): Result {
   const errors: string[] = [];
 
@@ -61,59 +44,56 @@ export function generateLink(state: FormState): Result {
     errors.push(...urlResult.errors);
   }
 
-  let medium: string | undefined;
   let source: string | undefined;
   let campaignName: string | undefined;
-  switch (state.type) {
-    case "ad":
-      medium = state.adOptions.medium;
-      if (!medium) {
-        errors.push(`Missing "${OPTIONS.ad.medium.label}"`);
-      }
-      source = determineAdSource(state.adOptions);
-      if (medium && !source) {
-        errors.push(`Missing "${OPTIONS.ad.source.search.label}"`);
-      }
-      campaignName = state.adOptions.campaignName;
-      if (!campaignName) {
-        errors.push(`Missing "${OPTIONS.ad.campaignName.label}"`);
-      }
+  switch (state.medium) {
+    case undefined:
+      errors.push(`Missing "${MEDIUM_LABEL}"`);
       break;
     case "email":
-      medium = "email";
-      source = state.emailOptions.source;
-      if (!source) {
-        errors.push(`Missing "${OPTIONS.email.source.label}"`);
-      }
+      source = state.email.source;
+      campaignName = state.email.campaignName;
       break;
     case "field":
-      medium = "field";
-      source = state.fieldOptions.source;
-      if (!source) {
-        errors.push(`Missing "${OPTIONS.field.source.label}"`);
-      }
-      campaignName = state.fieldOptions.campaignName;
-      if (!campaignName) {
-        errors.push(`Missing "${OPTIONS.field.campaignName.label}"`);
-      }
+      source = state.field.source;
+      campaignName = state.field.campaignName;
       break;
-    case "social":
-      medium = "organic_social";
-      source = state.socialOptions.source;
-      if (!source) {
-        errors.push(`Missing "${OPTIONS.social.source.label}"`);
-      }
-      campaignName = state.socialOptions.campaignName;
-      if (!campaignName) {
-        errors.push(`Missing "${OPTIONS.social.campaignName.label}"`);
-      }
+    case "organic_social":
+      source = state.organicSocial.source;
+      campaignName = state.organicSocial.campaignName;
+      break;
+    case "paid_mail":
+      source = state.paidMail.source;
+      campaignName = state.paidMail.campaignName;
+      break;
+    case "paid_search":
+      source = state.paidSearch.source;
+      campaignName = state.paidSearch.campaignName;
+      break;
+    case "paid_social":
+      source = state.paidSocial.source;
+      campaignName = state.paidSocial.campaignName;
+      break;
+    case "paid_sms":
+      source = state.paidSms.source;
+      campaignName = state.paidSms.campaignName;
       break;
     default:
-      errors.push(`Missing "${OPTIONS.communicationType.label}"`);
+      errors.push(
+        `Unrecognized "${MEDIUM_LABEL}", meaning a programming bug: ${state.medium}`,
+      );
+  }
+
+  // Check for required fields.
+  if (state.medium) {
+    if (!source && state.medium !== "paid_mail") {
+      errors.push(`Missing "${SOURCE_LABEL}"`);
+    }
+    if (!campaignName) errors.push(`Missing "${CAMPAIGN_NAME_LABEL}"`);
   }
 
   const queryParam = generateUtmString({
-    medium,
+    medium: state.medium,
     source,
     campaign: campaignName,
   });
