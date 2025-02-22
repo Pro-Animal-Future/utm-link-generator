@@ -1,0 +1,23 @@
+@use "theme/typography";
+
+dl {
+  margin-bottom: 30px;
+}
+
+dt {
+  font-size: typography.$font-size-lg;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+dd {
+  margin-left: 0; // Reset default indentation
+  margin-bottom: 1.25rem;
+  font-size: typography.$font-size-base;
+  line-height: 1.5;
+  color: #555;
+
+  // Add a subtle left border for visual hierarchy
+  padding-left: 1rem;
+  border-left: 3px solid #e5e5e5;
+}
