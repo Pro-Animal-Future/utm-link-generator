@@ -1,13 +1,12 @@
 export interface RadioOption {
   value: string;
-  label: string;
   description?: string;
 }
 
 export interface RadioGroup {
   id: string;
   label: string;
-  options: Array<RadioOption>;
+  options: readonly RadioOption[];
 }
 
 export function generateRadioGroup(request: RadioGroup): HTMLFieldSetElement {
@@ -36,7 +35,7 @@ export function generateRadioGroup(request: RadioGroup): HTMLFieldSetElement {
     const label = document.createElement("label");
     label.htmlFor = input.id;
     label.classList.add("radio-label");
-    const labelText = document.createTextNode(option.label);
+    const labelText = document.createTextNode(option.value);
     label.appendChild(labelText);
     if (option.description) {
       const description = document.createElement("span");

@@ -1,5 +1,5 @@
 import { OPTIONS } from "../config/options";
-import { CommunicationType, FormState } from "../state/FormState";
+import { Medium, FormState } from "../state/FormState";
 import Observable from "../state/Observable";
 import { generateRadioGroup, RadioGroup } from "./radio";
 
@@ -48,7 +48,7 @@ function initUrl(
   form.appendChild(container);
 
   const label = document.createElement("label");
-  label.textContent = "Your URL";
+  label.textContent = "PAF URL";
   label.htmlFor = "url-input";
   container.appendChild(label);
 
@@ -64,108 +64,52 @@ function initUrl(
   );
 }
 
-function initCommunicationTypeQuestion(
+function initMediumQuestion(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  initRadioGroup(form, formState, OPTIONS.communicationType, (value) => ({
-    type: value as CommunicationType,
+  initRadioGroup(form, formState, OPTIONS.medium, (value) => ({
+    medium: value as Medium,
   }));
 }
 
-function initCommunicationTypeDiv(
+function initMediumQuestionsDiv(
   form: HTMLFormElement,
   formState: Observable<FormState>,
-  communicationType: CommunicationType,
+  medium: Medium,
 ): HTMLDivElement {
   const container = document.createElement("div");
-  container.id = `${communicationType}-options`;
+  container.id = `${medium}-options`;
   container.hidden = true;
   form.appendChild(container);
 
-  formState.subscribe(({ type }) => {
-    container.hidden = type !== communicationType;
+  formState.subscribe(({ medium: type }) => {
+    container.hidden = type !== medium;
   });
   return container;
-}
-
-function initAdOptions(
-  form: HTMLFormElement,
-  formState: Observable<FormState>,
-): void {
-  const container = initCommunicationTypeDiv(form, formState, "ad");
-
-  initRadioGroup(
-    container,
-    formState,
-    OPTIONS.ad.medium,
-    (value, priorState) => ({
-      adOptions: { ...priorState.adOptions, medium: value },
-    }),
-  );
-
-  initRadioGroup(
-    container,
-    formState,
-    OPTIONS.ad.source.search,
-    (value, priorState) => ({
-      adOptions: {
-        ...priorState.adOptions,
-        source: { ...priorState.adOptions.source, search: value },
-      },
-    }),
-    (state) => state.adOptions.medium !== "paid_search",
-  );
-
-  initRadioGroup(
-    container,
-    formState,
-    OPTIONS.ad.source.social,
-    (value, priorState) => ({
-      adOptions: {
-        ...priorState.adOptions,
-        source: { ...priorState.adOptions.source, social: value },
-      },
-    }),
-    (state) => state.adOptions.medium !== "paid_social",
-  );
-
-  initRadioGroup(
-    container,
-    formState,
-    OPTIONS.ad.source.outOfHome,
-    (value, priorState) => ({
-      adOptions: {
-        ...priorState.adOptions,
-        source: { ...priorState.adOptions.source, outOfHome: value },
-      },
-    }),
-    (state) => state.adOptions.medium !== "paid_ooh",
-  );
-
-  initRadioGroup(
-    container,
-    formState,
-    OPTIONS.ad.campaignName,
-    (value, priorState) => ({
-      adOptions: { ...priorState.adOptions, campaignName: value },
-    }),
-  );
 }
 
 function initEmailOptions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  const container = initCommunicationTypeDiv(form, formState, "email");
+  const container = initMediumQuestionsDiv(form, formState, "email");
 
   initRadioGroup(
     container,
     formState,
-
     OPTIONS.email.source,
     (value, priorState) => ({
-      emailOptions: { ...priorState.emailOptions, source: value },
+      email: { ...priorState.email, source: value },
+    }),
+  );
+
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.email.campaignName,
+    (value, priorState) => ({
+      email: { ...priorState.email, campaignName: value },
     }),
   );
 }
@@ -174,52 +118,145 @@ function initFieldOptions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  const container = initCommunicationTypeDiv(form, formState, "field");
+  const container = initMediumQuestionsDiv(form, formState, "field");
 
   initRadioGroup(
     container,
     formState,
-
     OPTIONS.field.source,
     (value, priorState) => ({
-      fieldOptions: { ...priorState.fieldOptions, source: value },
+      field: { ...priorState.field, source: value },
     }),
   );
 
   initRadioGroup(
     container,
     formState,
-
     OPTIONS.field.campaignName,
     (value, priorState) => ({
-      fieldOptions: { ...priorState.fieldOptions, campaignName: value },
+      field: { ...priorState.field, campaignName: value },
     }),
   );
 }
 
-function initSocialOptions(
+function initOrganicSocialOptions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  const container = initCommunicationTypeDiv(form, formState, "social");
+  const container = initMediumQuestionsDiv(form, formState, "organic_social");
 
   initRadioGroup(
     container,
     formState,
-
-    OPTIONS.social.source,
+    OPTIONS.organicSocial.source,
     (value, priorState) => ({
-      socialOptions: { ...priorState.socialOptions, source: value },
+      organicSocial: {
+        ...priorState.organicSocial,
+        source: value,
+      },
     }),
   );
 
   initRadioGroup(
     container,
     formState,
-
-    OPTIONS.social.campaignName,
+    OPTIONS.organicSocial.campaignName,
     (value, priorState) => ({
-      socialOptions: { ...priorState.socialOptions, campaignName: value },
+      organicSocial: {
+        ...priorState.organicSocial,
+        campaignName: value,
+      },
+    }),
+  );
+}
+
+function initPaidMailOptions(
+  form: HTMLFormElement,
+  formState: Observable<FormState>,
+): void {
+  const container = initMediumQuestionsDiv(form, formState, "paid_mail");
+
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.paidMail.campaignName,
+    (value, priorState) => ({
+      paidMail: { ...priorState.paidMail, campaignName: value },
+    }),
+  );
+}
+
+function initPaidSearchOptions(
+  form: HTMLFormElement,
+  formState: Observable<FormState>,
+): void {
+  const container = initMediumQuestionsDiv(form, formState, "paid_search");
+
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.paidSearch.source,
+    (value, priorState) => ({
+      paidSearch: { ...priorState.paidSearch, source: value },
+    }),
+  );
+
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.paidSearch.campaignName,
+    (value, priorState) => ({
+      paidSearch: { ...priorState.paidSearch, campaignName: value },
+    }),
+  );
+}
+
+function initPaidSocialOptions(
+  form: HTMLFormElement,
+  formState: Observable<FormState>,
+): void {
+  const container = initMediumQuestionsDiv(form, formState, "paid_social");
+
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.paidSocial.source,
+    (value, priorState) => ({
+      paidSocial: { ...priorState.paidSocial, source: value },
+    }),
+  );
+
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.paidSocial.campaignName,
+    (value, priorState) => ({
+      paidSocial: { ...priorState.paidSocial, campaignName: value },
+    }),
+  );
+}
+
+function initPaidSmsOptions(
+  form: HTMLFormElement,
+  formState: Observable<FormState>,
+): void {
+  const container = initMediumQuestionsDiv(form, formState, "paid_sms");
+
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.paidSms.source,
+    (value, priorState) => ({
+      paidSms: { ...priorState.paidSms, source: value },
+    }),
+  );
+
+  initRadioGroup(
+    container,
+    formState,
+    OPTIONS.paidSms.campaignName,
+    (value, priorState) => ({
+      paidSms: { ...priorState.paidSms, campaignName: value },
     }),
   );
 }
@@ -227,9 +264,12 @@ function initSocialOptions(
 export function initForm(formState: Observable<FormState>): void {
   const form = document.getElementById("utm-form") as HTMLFormElement;
   initUrl(form, formState);
-  initCommunicationTypeQuestion(form, formState);
-  initAdOptions(form, formState);
+  initMediumQuestion(form, formState);
   initEmailOptions(form, formState);
   initFieldOptions(form, formState);
-  initSocialOptions(form, formState);
+  initOrganicSocialOptions(form, formState);
+  initPaidMailOptions(form, formState);
+  initPaidSearchOptions(form, formState);
+  initPaidSocialOptions(form, formState);
+  initPaidSmsOptions(form, formState);
 }

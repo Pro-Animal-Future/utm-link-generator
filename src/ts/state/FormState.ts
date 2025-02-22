@@ -1,55 +1,44 @@
+import { OPTIONS } from "../config/options";
 import Observable from "./Observable";
 
-export type CommunicationType = "ad" | "email" | "field" | "social";
+export type Medium = (typeof OPTIONS)["medium"]["options"][number]["value"];
 
-export interface AdOptions {
-  medium: string | undefined;
-  source: {
-    social: string | undefined;
-    search: string | undefined;
-    outOfHome: string | undefined;
-  };
-  campaignName: string | undefined;
-}
-
-export interface EmailOptions {
-  source: string | undefined;
-}
-
-export interface FieldOptions {
+interface CommonOptions {
   source: string | undefined;
   campaignName: string | undefined;
 }
 
-export interface SocialOptions {
-  source: string | undefined;
-  campaignName: string | undefined;
-}
+export type EmailOptions = CommonOptions;
+export type FieldOptions = CommonOptions;
+export type OrganicSocialOptions = CommonOptions;
+
+export type PaidMailOptions = CommonOptions;
+export type PaidSearchOptions = CommonOptions;
+export type PaidSocialOptions = CommonOptions;
+export type PaidSmsOptions = CommonOptions;
 
 export interface FormState {
   url: string | undefined;
-  type: CommunicationType | undefined;
-  adOptions: AdOptions;
-  emailOptions: EmailOptions;
-  fieldOptions: FieldOptions;
-  socialOptions: SocialOptions;
+  medium: Medium | undefined;
+  email: EmailOptions;
+  field: FieldOptions;
+  organicSocial: OrganicSocialOptions;
+  paidMail: PaidMailOptions;
+  paidSearch: PaidSearchOptions;
+  paidSocial: PaidSocialOptions;
+  paidSms: PaidSmsOptions;
 }
 
 export function initFormState(): Observable<FormState> {
   return new Observable<FormState>("form state", {
     url: undefined,
-    type: undefined,
-    adOptions: {
-      medium: undefined,
-      source: {
-        social: undefined,
-        search: undefined,
-        outOfHome: undefined,
-      },
-      campaignName: undefined,
-    },
-    emailOptions: { source: undefined },
-    fieldOptions: { source: undefined, campaignName: undefined },
-    socialOptions: { source: undefined, campaignName: undefined },
+    medium: undefined,
+    email: { source: undefined, campaignName: undefined },
+    field: { source: undefined, campaignName: undefined },
+    organicSocial: { source: undefined, campaignName: undefined },
+    paidMail: { source: undefined, campaignName: undefined },
+    paidSearch: { source: undefined, campaignName: undefined },
+    paidSocial: { source: undefined, campaignName: undefined },
+    paidSms: { source: undefined, campaignName: undefined },
   });
 }

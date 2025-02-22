@@ -10,26 +10,34 @@ test.describe("generateLink()", () => {
   /// to be `undefined`.
   const DEFAULT: FormState = {
     url: DEFAULT_URL,
-    type: "email",
-    adOptions: {
-      medium: "paid_social",
-      source: {
-        social: "meta",
-        search: undefined,
-        outOfHome: undefined,
-      },
-      campaignName: "lead_gen",
-    },
-    emailOptions: {
+    medium: "email",
+    email: {
       source: "mailchimp",
+      campaignName: "proanimaloregon",
     },
-    fieldOptions: {
+    field: {
       source: "poster",
       campaignName: "lead_gen",
     },
-    socialOptions: {
+    organicSocial: {
       source: "instagram",
       campaignName: "proanimaldc",
+    },
+    paidMail: {
+      source: undefined,
+      campaignName: "lead_gen",
+    },
+    paidSearch: {
+      source: "google",
+      campaignName: "lead_gen",
+    },
+    paidSocial: {
+      source: "meta",
+      campaignName: "lead_gen",
+    },
+    paidSms: {
+      source: "scaletowin",
+      campaignName: "lead_gen",
     },
   };
 
@@ -50,89 +58,33 @@ test.describe("generateLink()", () => {
     });
   });
 
-  test("missing communication type", () => {
-    expect(generateLink({ ...DEFAULT, type: undefined })).toEqual({
+  test("missing medium", () => {
+    expect(generateLink({ ...DEFAULT, medium: undefined })).toEqual({
       success: false,
-      errors: ['Missing "Communication type"'],
-    });
-  });
-
-  test("ad options", () => {
-    const ad: FormState = { ...DEFAULT, type: "ad" };
-    expect(generateLink(ad)).toEqual({
-      success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_social&utm_source=meta&utm_campaign=lead_gen`,
-    });
-
-    expect(
-      generateLink({
-        ...ad,
-        adOptions: {
-          medium: undefined,
-          source: {
-            search: undefined,
-            social: undefined,
-            outOfHome: undefined,
-          },
-          campaignName: undefined,
-        },
-      }),
-    ).toEqual({
-      success: false,
-      // Note that we don't complain about `source` because it depends on the medium.
-      errors: ['Missing "Medium"', 'Missing "Primary purpose"'],
-    });
-
-    /// Once the `medium` is set, we expect `source` to also be set.
-    expect(
-      generateLink({
-        ...ad,
-        adOptions: {
-          ...ad.adOptions,
-          source: {
-            social: undefined,
-            search: undefined,
-            outOfHome: undefined,
-          },
-        },
-      }),
-    ).toEqual({
-      success: false,
-      errors: ['Missing "Source"'],
-    });
-
-    // Certain mediums imply the `source`.
-    expect(
-      generateLink({
-        ...ad,
-        adOptions: { ...ad.adOptions, medium: "paid_tv" },
-      }),
-    ).toEqual({
-      success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_tv&utm_source=tv&utm_campaign=lead_gen`,
+      errors: ['Missing "utm_medium"'],
     });
   });
 
   test("email options", () => {
-    const email: FormState = { ...DEFAULT, type: "email" };
+    const email: FormState = { ...DEFAULT, medium: "email" };
     expect(generateLink(email)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=email&utm_source=mailchimp`,
+      url: `${DEFAULT_URL}?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon`,
     });
 
     expect(
       generateLink({
         ...email,
-        emailOptions: { source: undefined },
+        email: { source: undefined, campaignName: undefined },
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "Source"'],
+      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
     });
   });
 
   test("field options", () => {
-    const field: FormState = { ...DEFAULT, type: "field" };
+    const field: FormState = { ...DEFAULT, medium: "field" };
     expect(generateLink(field)).toEqual({
       success: true,
       url: `${DEFAULT_URL}?utm_medium=field&utm_source=poster&utm_campaign=lead_gen`,
@@ -141,16 +93,16 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...field,
-        fieldOptions: { source: undefined, campaignName: undefined },
+        field: { source: undefined, campaignName: undefined },
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "Source"', 'Missing "Primary purpose"'],
+      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
     });
   });
 
-  test("social media options", () => {
-    const social: FormState = { ...DEFAULT, type: "social" };
+  test("organic social media options", () => {
+    const social: FormState = { ...DEFAULT, medium: "organic_social" };
     expect(generateLink(social)).toEqual({
       success: true,
       url: `${DEFAULT_URL}?utm_medium=organic_social&utm_source=instagram&utm_campaign=proanimaldc`,
@@ -159,11 +111,83 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...social,
-        socialOptions: { source: undefined, campaignName: undefined },
+        organicSocial: { source: undefined, campaignName: undefined },
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "Source"', 'Missing "Account name"'],
+      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+    });
+  });
+
+  test("paid mail options", () => {
+    const mail: FormState = { ...DEFAULT, medium: "paid_mail" };
+    expect(generateLink(mail)).toEqual({
+      success: true,
+      url: `${DEFAULT_URL}?utm_medium=paid_mail&utm_campaign=lead_gen`,
+    });
+
+    expect(
+      generateLink({
+        ...mail,
+        paidMail: { source: undefined, campaignName: undefined },
+      }),
+    ).toEqual({
+      success: false,
+      errors: ['Missing "utm_campaign"'],
+    });
+  });
+
+  test("paid search options", () => {
+    const search: FormState = { ...DEFAULT, medium: "paid_search" };
+    expect(generateLink(search)).toEqual({
+      success: true,
+      url: `${DEFAULT_URL}?utm_medium=paid_search&utm_source=google&utm_campaign=lead_gen`,
+    });
+
+    expect(
+      generateLink({
+        ...search,
+        paidSearch: { source: undefined, campaignName: undefined },
+      }),
+    ).toEqual({
+      success: false,
+      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+    });
+  });
+
+  test("paid social media options", () => {
+    const social: FormState = { ...DEFAULT, medium: "paid_social" };
+    expect(generateLink(social)).toEqual({
+      success: true,
+      url: `${DEFAULT_URL}?utm_medium=paid_social&utm_source=meta&utm_campaign=lead_gen`,
+    });
+
+    expect(
+      generateLink({
+        ...social,
+        paidSocial: { source: undefined, campaignName: undefined },
+      }),
+    ).toEqual({
+      success: false,
+      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+    });
+  });
+
+  test("paid sms options", () => {
+    const sms: FormState = { ...DEFAULT, medium: "paid_sms" };
+    expect(generateLink(sms)).toEqual({
+      success: true,
+      url: `${DEFAULT_URL}?utm_medium=paid_sms&utm_source=scaletowin&utm_campaign=lead_gen`,
+    });
+
+    expect(
+      generateLink({
+        ...sms,
+        paidSms: { source: undefined, campaignName: undefined },
+      }),
+    ).toEqual({
+      success: false,
+      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
     });
   });
 });

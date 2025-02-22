@@ -1,133 +1,131 @@
+export const MEDIUM_LABEL = "utm_medium";
+export const SOURCE_LABEL = "utm_source";
+export const CAMPAIGN_NAME_LABEL = "utm_campaign";
+
+const CAMPAIGN_PURPOSE_OPTIONS = [
+  { value: "fundraising" },
+  { value: "lead_gen" },
+  { value: "recruitment" },
+  { value: "voter_persuasion" },
+] as const;
+
+const ACCOUNT_NAME_OPTIONS = [
+  { value: "proanimalcolorado" },
+  { value: "proanimalfuture" },
+  { value: "proanimaloregon" },
+  { value: "nattiefulton" },
+];
+
 export const OPTIONS = {
-  communicationType: {
-    id: "communication-type",
-    label: "Communication type",
+  medium: {
+    id: "medium",
+    label: MEDIUM_LABEL,
     options: [
-      { value: "ad", label: "Advertisement" },
-      { value: "email", label: "Email" },
-      { value: "field", label: "Field" },
-      { value: "social", label: "Organic social media" },
+      { value: "email" },
+      { value: "field" },
+      { value: "organic_social" },
+      { value: "paid_mail" },
+      { value: "paid_search" },
+      { value: "paid_social" },
+      { value: "paid_sms" },
     ],
-  },
-  ad: {
-    medium: {
-      id: "ad-medium",
-      label: "Medium",
-      options: [
-        {
-          value: "paid_social",
-          label: "Social media ads",
-        },
-        {
-          value: "paid_search",
-          label: "Search ads",
-        },
-        {
-          value: "paid_ooh",
-          label: "Out-of-home ads",
-          description: "Billboards, transit ads, bus shelters",
-        },
-        {
-          value: "paid_sms",
-          label: "Text blasts",
-        },
-        { value: "paid_mail", label: "Mass-mailed voter mailers" },
-        { value: "paid_tv", label: "TV commercials" },
-      ],
-    },
-    source: {
-      social: {
-        id: "ad-source-social",
-        label: "Source",
-        options: [
-          { value: "meta", label: "Meta" },
-          { value: "reddit", label: "Reddit" },
-          { value: "youtube", label: "YouTube" },
-        ],
-      },
-      search: {
-        id: "ad-source-search",
-        label: "Source",
-        options: [
-          { value: "google", label: "Google" },
-          { value: "bing", label: "Bing" },
-        ],
-      },
-      outOfHome: {
-        id: "ad-source-out-of-home",
-        label: "Source",
-        options: [{ value: "billboard", label: "Billboard" }],
-      },
-    },
-    campaignName: {
-      id: "ad-campaign-name",
-      label: "Primary purpose",
-      options: [
-        { value: "lead_gen", label: "Lead generation" },
-        { value: "fundraising", label: "Fundraising" },
-        { value: "recruitment", label: "Recruitment" },
-        { value: "voter_persuasion", label: "Voter Persuasion" },
-      ],
-    },
   },
   email: {
     source: {
       id: "email-source",
-      label: "Source",
+      label: SOURCE_LABEL,
       options: [
-        { value: "substack", label: "Substack" },
-        { value: "mailchimp", label: "Mailchimp" },
-        { value: "sendgrid", label: "SendGrid" },
+        { value: "substack" },
+        { value: "mailchimp" },
+        { value: "sendgrid" },
       ],
+    },
+    campaignName: {
+      id: "email-campaign-name",
+      label: CAMPAIGN_NAME_LABEL,
+      options: ACCOUNT_NAME_OPTIONS,
     },
   },
   field: {
     source: {
       id: "field-source",
-      label: "Source",
+      label: SOURCE_LABEL,
       options: [
-        { value: "poster", label: "Poster" },
-        { value: "sticker", label: "Sticker" },
-        { value: "aframe", label: "Aframe" },
-        { value: "postcard", label: "Postcard" },
-        { value: "handout", label: "Handout" },
-        { value: "tablecloth", label: "Table cloth" },
+        { value: "aframe" },
+        { value: "handout" },
+        { value: "postcard" },
+        { value: "poster" },
+        { value: "sticker" },
+        { value: "tablecloth" },
       ],
     },
     campaignName: {
       id: "field-campaign-name",
-      label: "Primary purpose",
-      options: [
-        { value: "lead_gen", label: "Lead generation" },
-        { value: "fundraising", label: "Fundraising" },
-        { value: "recruitment", label: "Recruitment" },
-        { value: "voter_persuasion", label: "Voter Persuasion" },
-      ],
+      label: CAMPAIGN_NAME_LABEL,
+      options: CAMPAIGN_PURPOSE_OPTIONS,
     },
   },
-  social: {
+  organicSocial: {
     source: {
-      id: "social-source",
-      label: "Source",
+      id: "organic-social-source",
+      label: SOURCE_LABEL,
       options: [
-        { value: "instagram", label: "Instagram" },
-        { value: "facebook", label: "Facebook" },
-        { value: "youtube", label: "YouTube" },
-        { value: "x", label: "X" },
-        { value: "nextdoor", label: "Nextdoor" },
-        { value: "bluesky", label: "Bluesky" },
+        { value: "facebook" },
+        { value: "instagram" },
+        { value: "nextdoor" },
+        { value: "slack" },
+        { value: "tiktok" },
+        { value: "x" },
+        { value: "youtube" },
       ],
     },
     campaignName: {
-      id: "social-campaign-name",
-      label: "Account name",
-      options: [
-        { value: "proanimaloregon", label: "Pro-Animal Oregon" },
-        { value: "proanimaldc", label: "Pro-Animal DC" },
-        { value: "proanimalcolorado", label: "Pro-Animal Colorado" },
-        { value: "proanimalfuture", label: "Pro-Animal Future" },
-        { value: "nattiefulton", label: "Natalie Fulton" },
-      ],
+      id: "organic-social-campaign-name",
+      label: CAMPAIGN_NAME_LABEL,
+      options: ACCOUNT_NAME_OPTIONS,
     },
   },
-};
+  paidMail: {
+    campaignName: {
+      id: "paid-mail-campaign-name",
+      label: CAMPAIGN_NAME_LABEL,
+      options: CAMPAIGN_PURPOSE_OPTIONS,
+    },
+  },
+  paidSearch: {
+    source: {
+      id: "paid-search-source",
+      label: SOURCE_LABEL,
+      options: [{ value: "google" }],
+    },
+    campaignName: {
+      id: "paid-search-campaign-name",
+      label: CAMPAIGN_NAME_LABEL,
+      options: CAMPAIGN_PURPOSE_OPTIONS,
+    },
+  },
+  paidSocial: {
+    source: {
+      id: "paid-social-source",
+      label: SOURCE_LABEL,
+      options: [{ value: "meta" }, { value: "youtube" }],
+    },
+    campaignName: {
+      id: "paid-social-campaign-name",
+      label: CAMPAIGN_NAME_LABEL,
+      options: CAMPAIGN_PURPOSE_OPTIONS,
+    },
+  },
+  paidSms: {
+    source: {
+      id: "paid-sms-source",
+      label: SOURCE_LABEL,
+      options: [{ value: "scaletowin" }],
+    },
+    campaignName: {
+      id: "paid-sms-campaign-name",
+      label: CAMPAIGN_NAME_LABEL,
+      options: CAMPAIGN_PURPOSE_OPTIONS,
+    },
+  },
+} as const;
