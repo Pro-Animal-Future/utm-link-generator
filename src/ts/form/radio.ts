@@ -49,18 +49,45 @@ function generateRadioOption(
   radioDiv.appendChild(textInput);
 
   // Typing results in selecting the radio option.
-  const checkRadio = () => {
+  //
+  // Note that the text input's "input" event will also bubble up
+  // to the event listener configured in initRadioGroup() in initForm.ts on
+  // the outer fieldset. This means that when a user types, that event
+  // listener will properly update the form state by calling `updateFormState()`
+  // with the text input's value.
+  textInput.addEventListener("input", () => {
     radioInput.checked = true;
-    radioInput.dispatchEvent(new Event("change", { bubbles: true }));
-  };
-  textInput.addEventListener("input", checkRadio);
-  textInput.addEventListener("focus", checkRadio);
+  });
 
   // Selecting the radio auto-focuses text.
+  //
+  // We also dispatch an "input" event on the corresponding textInput.
+  // This is subtle. This dispatched "input" event will bubble up to the
+  // fieldset's event handler in initRadioGroup() in initForm.ts. That
+  // event handler will first have already processed the "input" that
+  // was triggered by clicking the radio option, and it will have called
+  // `updateFormState` to update the form state to use the radio button's value.
+  // Then, the below "change" event listener will trigger, where we dispatch
+  // a new "input" event on the textInput. The fieldset's event handler will
+  // handle this dispatched "input" event to update the form state again
+  // with the text value. The flow looks like:
+  //
+  //   1. User clicks the radio button
+  //   2. Radio button fires off "input" (via the browser). This is handled by initRadioGroup() and
+  //      updates the form state to the radio button's value. Note that this value is actually bad
+  //      and shouldn't be used by the UTM link generator, but we are okay with it
+  //      because the value will be overwritten in the following steps.
+  //   3. Radio button fires off "change" (via the browser). That results in the
+  //      following event listener in this file running.
+  //   4. The following "change" event listener dispatches an "input" event on the
+  //      corresponding text <input> element.
+  //   5. The event handler in initRadioGroup() handles this new "input" event. It updates
+  //      the form state to now use the latest value of the text <input> element.
   radioInput.addEventListener("change", () => {
     if (radioInput.checked) {
       textInput.focus();
     }
+    textInput.dispatchEvent(new Event("input", { bubbles: true }));
   });
 
   return radioDiv;

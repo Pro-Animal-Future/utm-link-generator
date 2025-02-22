@@ -28,7 +28,10 @@ function initRadioGroup(
   hideFn?: (state: FormState) => boolean,
 ): void {
   const group = generateRadioGroup(request);
-  group.addEventListener("change", updateFormState(formState)(updateFn));
+
+  // We use 'input' rather than 'change' for better responsiveness with
+  // radio options with text input.
+  group.addEventListener("input", updateFormState(formState)(updateFn));
   parent.appendChild(group);
 
   if (hideFn) {
