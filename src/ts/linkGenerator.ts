@@ -44,7 +44,7 @@ export function generateLink(state: FormState): Result {
     errors.push(...urlResult.errors);
   }
 
-  let medium = state.medium;
+  const medium = state.medium;
   let source: string | undefined;
   let campaignName: string | undefined;
   switch (medium) {
