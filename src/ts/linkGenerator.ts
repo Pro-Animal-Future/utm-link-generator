@@ -44,56 +44,31 @@ export function generateLink(state: FormState): Result {
     errors.push(...urlResult.errors);
   }
 
-  let source: string | undefined;
-  let campaignName: string | undefined;
-  switch (state.medium) {
-    case undefined:
-      errors.push(`Missing "${MEDIUM_LABEL}"`);
-      break;
-    case "email":
-      source = state.email.source;
-      campaignName = state.email.campaignName;
-      break;
-    case "field":
-      source = state.field.source;
-      campaignName = state.field.campaignName;
-      break;
-    case "organic_social":
-      source = state.organicSocial.source;
-      campaignName = state.organicSocial.campaignName;
-      break;
-    case "paid_mail":
-      source = state.paidMail.source;
-      campaignName = state.paidMail.campaignName;
-      break;
-    case "paid_search":
-      source = state.paidSearch.source;
-      campaignName = state.paidSearch.campaignName;
-      break;
-    case "paid_social":
-      source = state.paidSocial.source;
-      campaignName = state.paidSocial.campaignName;
-      break;
-    case "paid_sms":
-      source = state.paidSms.source;
-      campaignName = state.paidSms.campaignName;
-      break;
-    default:
-      errors.push(
-        `Unrecognized "${MEDIUM_LABEL}", meaning a programming bug: ${state.medium}`,
-      );
+  if (!state.medium) {
+    errors.push(`Missing "${MEDIUM_LABEL}"`);
+    return { success: false, errors };
   }
 
+  const options = {
+    email: state.email,
+    field: state.field,
+    organic_social: state.organicSocial,
+    paid_mail: state.paidMail,
+    paid_search: state.paidSearch,
+    paid_social: state.paidSocial,
+    paid_sms: state.paidSms,
+  }[state.medium];
+
   // Check for required fields.
-  if (state.medium) {
-    if (!source) errors.push(`Missing "${SOURCE_LABEL}"`);
-    if (!campaignName) errors.push(`Missing "${CAMPAIGN_NAME_LABEL}"`);
-  }
+  if (!options.source) errors.push(`Missing "${SOURCE_LABEL}"`);
+  if (!options.campaignName) errors.push(`Missing "${CAMPAIGN_NAME_LABEL}"`);
 
   const queryParam = generateUtmString({
     medium: state.medium,
-    source,
-    campaign: campaignName,
+    source: options.source,
+    campaign: options.campaignName,
+    id: options.id,
+    content: options.content,
   });
   return errors.length
     ? { success: false, errors }
