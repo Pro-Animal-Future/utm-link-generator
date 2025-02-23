@@ -86,9 +86,7 @@ export function generateLink(state: FormState): Result {
 
   // Check for required fields.
   if (state.medium) {
-    if (!source && state.medium !== "paid_mail") {
-      errors.push(`Missing "${SOURCE_LABEL}"`);
-    }
+    if (!source) errors.push(`Missing "${SOURCE_LABEL}"`);
     if (!campaignName) errors.push(`Missing "${CAMPAIGN_NAME_LABEL}"`);
   }
 
