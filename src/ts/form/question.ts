@@ -140,13 +140,14 @@ export function generateFreeformQuestion(
   container.classList.add("freeform-container");
 
   const label = document.createElement("label");
+  label.htmlFor = request.id;
+  label.classList.add("freeform-label");
   setLabelAndDescription(
     label,
     request.label,
     "freeform-description",
     request.description,
   );
-  label.htmlFor = request.id;
   container.appendChild(label);
 
   const input = document.createElement("input");
