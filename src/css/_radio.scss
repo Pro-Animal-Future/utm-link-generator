@@ -5,8 +5,6 @@
 
 /* Design inspired by https://designsystem.digital.gov/components/radio-buttons/. */
 
-$max-width: 340px;
-
 .radio-fieldset {
   border: none;
   padding: 0;
@@ -31,7 +29,7 @@ $max-width: 340px;
   border: borders.$component-border;
   border-radius: borders.$border-radius;
 
-  max-width: $max-width;
+  max-width: spacing.$question-max-width;
   min-height: spacing.$min-touch-target;
   margin: 10px 0;
   padding: 10px 15px 10px 40px;
@@ -85,5 +83,5 @@ $max-width: 340px;
 
   margin-left: $margin-left;
   margin-top: 5px;
-  max-width: calc($max-width - $margin-left);
+  max-width: calc(spacing.$question-max-width - $margin-left);
 }

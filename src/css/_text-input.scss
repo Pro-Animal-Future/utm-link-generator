@@ -1,4 +1,5 @@
 @use "theme/borders";
+@use "theme/spacing";
 @use "theme/typography";
 
 input {
@@ -19,6 +20,11 @@ input {
 
 .freeform-container {
   margin-bottom: 15px;
+  max-width: spacing.$question-max-width;
+
+  &:has(> #url) {
+    max-width: unset;
+  }
 
   label {
     font-size: typography.$font-size-lg;
