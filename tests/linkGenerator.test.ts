@@ -1,7 +1,20 @@
 import { expect, test } from "@playwright/test";
 
 import type { FormState } from "../src/ts/state/FormState";
-import { generateLink } from "../src/ts/linkGenerator";
+import { generateLink, generateUtmString } from "../src/ts/linkGenerator";
+import { NONE_OPTION } from "../src/ts/form/question";
+
+test("generateUtmString ignores None option", () => {
+  const input = {
+    medium: "email",
+    campaign: undefined,
+    id: NONE_OPTION.value,
+    content: "some_content",
+  };
+  expect(generateUtmString(input)).toEqual(
+    "?utm_medium=email&utm_content=some_content",
+  );
+});
 
 test.describe("generateLink()", () => {
   const DEFAULT_URL = "https://proanimal.org";
@@ -14,44 +27,44 @@ test.describe("generateLink()", () => {
     email: {
       source: "mailchimp",
       campaignName: "proanimaloregon",
-      id: undefined,
-      content: undefined,
+      id: "some_id",
+      content: "some_content",
     },
     field: {
       source: "poster",
       campaignName: "lead_gen",
-      id: undefined,
-      content: undefined,
+      id: "some_id",
+      content: "some_content",
     },
     organicSocial: {
       source: "instagram",
       campaignName: "proanimaldc",
-      id: undefined,
-      content: undefined,
+      id: "some_id",
+      content: "some_content",
     },
     paidMail: {
       source: "my_vendor",
       campaignName: "lead_gen",
-      id: undefined,
-      content: undefined,
+      id: "some_id",
+      content: "some_content",
     },
     paidSearch: {
       source: "google",
       campaignName: "lead_gen",
-      id: undefined,
-      content: undefined,
+      id: "some_id",
+      content: "some_content",
     },
     paidSocial: {
       source: "meta",
       campaignName: "lead_gen",
-      id: undefined,
-      content: undefined,
+      id: "some_id",
+      content: "some_content",
     },
     paidSms: {
       source: "scaletowin",
       campaignName: "lead_gen",
-      id: undefined,
-      content: undefined,
+      id: "some_id",
+      content: "some_content",
     },
   };
 
@@ -83,7 +96,7 @@ test.describe("generateLink()", () => {
     const email: FormState = { ...DEFAULT, medium: "email" };
     expect(generateLink(email)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon`,
+      url: `${DEFAULT_URL}?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -98,7 +111,12 @@ test.describe("generateLink()", () => {
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+      errors: [
+        'Missing "utm_source"',
+        'Missing "utm_campaign"',
+        'Missing "utm_id"',
+        'Missing "utm_content"',
+      ],
     });
   });
 
@@ -106,7 +124,7 @@ test.describe("generateLink()", () => {
     const field: FormState = { ...DEFAULT, medium: "field" };
     expect(generateLink(field)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=field&utm_source=poster&utm_campaign=lead_gen`,
+      url: `${DEFAULT_URL}?utm_medium=field&utm_source=poster&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -121,7 +139,12 @@ test.describe("generateLink()", () => {
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+      errors: [
+        'Missing "utm_source"',
+        'Missing "utm_campaign"',
+        'Missing "utm_id"',
+        'Missing "utm_content"',
+      ],
     });
   });
 
@@ -129,7 +152,7 @@ test.describe("generateLink()", () => {
     const social: FormState = { ...DEFAULT, medium: "organic_social" };
     expect(generateLink(social)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=organic_social&utm_source=instagram&utm_campaign=proanimaldc`,
+      url: `${DEFAULT_URL}?utm_medium=organic_social&utm_source=instagram&utm_campaign=proanimaldc&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -144,7 +167,12 @@ test.describe("generateLink()", () => {
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+      errors: [
+        'Missing "utm_source"',
+        'Missing "utm_campaign"',
+        'Missing "utm_id"',
+        'Missing "utm_content"',
+      ],
     });
   });
 
@@ -152,7 +180,7 @@ test.describe("generateLink()", () => {
     const mail: FormState = { ...DEFAULT, medium: "paid_mail" };
     expect(generateLink(mail)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_mail&utm_source=my_vendor&utm_campaign=lead_gen`,
+      url: `${DEFAULT_URL}?utm_medium=paid_mail&utm_source=my_vendor&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -167,7 +195,12 @@ test.describe("generateLink()", () => {
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+      errors: [
+        'Missing "utm_source"',
+        'Missing "utm_campaign"',
+        'Missing "utm_id"',
+        'Missing "utm_content"',
+      ],
     });
   });
 
@@ -175,7 +208,7 @@ test.describe("generateLink()", () => {
     const search: FormState = { ...DEFAULT, medium: "paid_search" };
     expect(generateLink(search)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_search&utm_source=google&utm_campaign=lead_gen`,
+      url: `${DEFAULT_URL}?utm_medium=paid_search&utm_source=google&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -190,7 +223,12 @@ test.describe("generateLink()", () => {
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+      errors: [
+        'Missing "utm_source"',
+        'Missing "utm_campaign"',
+        'Missing "utm_id"',
+        'Missing "utm_content"',
+      ],
     });
   });
 
@@ -198,7 +236,7 @@ test.describe("generateLink()", () => {
     const social: FormState = { ...DEFAULT, medium: "paid_social" };
     expect(generateLink(social)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_social&utm_source=meta&utm_campaign=lead_gen`,
+      url: `${DEFAULT_URL}?utm_medium=paid_social&utm_source=meta&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -213,7 +251,12 @@ test.describe("generateLink()", () => {
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+      errors: [
+        'Missing "utm_source"',
+        'Missing "utm_campaign"',
+        'Missing "utm_id"',
+        'Missing "utm_content"',
+      ],
     });
   });
 
@@ -221,7 +264,7 @@ test.describe("generateLink()", () => {
     const sms: FormState = { ...DEFAULT, medium: "paid_sms" };
     expect(generateLink(sms)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_sms&utm_source=scaletowin&utm_campaign=lead_gen`,
+      url: `${DEFAULT_URL}?utm_medium=paid_sms&utm_source=scaletowin&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -236,7 +279,12 @@ test.describe("generateLink()", () => {
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
+      errors: [
+        'Missing "utm_source"',
+        'Missing "utm_campaign"',
+        'Missing "utm_id"',
+        'Missing "utm_content"',
+      ],
     });
   });
 });
