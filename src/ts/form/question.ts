@@ -4,12 +4,23 @@ export interface RadioOption {
   textInput?: boolean;
 }
 
-export interface RadioGroup {
+interface BaseQuestion {
   id: string;
   label: string;
+}
+
+export interface RadioQuestion extends BaseQuestion {
+  type: "radio";
   options: readonly RadioOption[];
   optional?: boolean;
 }
+
+export interface FreeformQuestion extends BaseQuestion {
+  type: "freeform";
+  isUrl?: boolean;
+}
+
+export type Question = RadioQuestion | FreeformQuestion;
 
 export const NONE_OPTION: RadioOption = { value: "Do not set this option" };
 
@@ -72,7 +83,9 @@ function generateRadioOption(
   return radioDiv;
 }
 
-export function generateRadioGroup(request: RadioGroup): HTMLFieldSetElement {
+export function generateRadioQuestion(
+  request: RadioQuestion,
+): HTMLFieldSetElement {
   const fieldSet = document.createElement("fieldset");
   fieldSet.id = request.id;
   fieldSet.classList.add("radio-fieldset");
@@ -91,4 +104,24 @@ export function generateRadioGroup(request: RadioGroup): HTMLFieldSetElement {
   });
 
   return fieldSet;
+}
+
+export function generateFreeformQuestion(
+  request: FreeformQuestion,
+): HTMLDivElement {
+  const container = document.createElement("div");
+  container.classList.add("freeform-container");
+
+  const label = document.createElement("label");
+  label.textContent = request.label;
+  label.htmlFor = request.id;
+  container.appendChild(label);
+
+  const input = document.createElement("input");
+  input.type = request.isUrl ? "url" : "text";
+  input.id = request.id;
+  input.required = true;
+  container.appendChild(input);
+
+  return container;
 }

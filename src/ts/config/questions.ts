@@ -16,8 +16,15 @@ const ACCOUNT_NAME_OPTIONS = [
   { value: "nattiefulton" },
 ];
 
-export const OPTIONS = {
+export const QUESTIONS = {
+  url: {
+    type: "freeform",
+    id: "url",
+    label: "PAF URL",
+    isUrl: true,
+  },
   medium: {
+    type: "radio",
     id: "medium",
     label: MEDIUM_LABEL,
     options: [
@@ -32,6 +39,7 @@ export const OPTIONS = {
   },
   email: {
     source: {
+      type: "radio",
       id: "email-source",
       label: SOURCE_LABEL,
       options: [
@@ -41,6 +49,7 @@ export const OPTIONS = {
       ],
     },
     campaignName: {
+      type: "radio",
       id: "email-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: ACCOUNT_NAME_OPTIONS,
@@ -48,6 +57,7 @@ export const OPTIONS = {
   },
   field: {
     source: {
+      type: "radio",
       id: "field-source",
       label: SOURCE_LABEL,
       options: [
@@ -60,6 +70,7 @@ export const OPTIONS = {
       ],
     },
     campaignName: {
+      type: "radio",
       id: "field-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
@@ -67,6 +78,7 @@ export const OPTIONS = {
   },
   organicSocial: {
     source: {
+      type: "radio",
       id: "organic-social-source",
       label: SOURCE_LABEL,
       options: [
@@ -80,6 +92,7 @@ export const OPTIONS = {
       ],
     },
     campaignName: {
+      type: "radio",
       id: "organic-social-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: [
@@ -91,6 +104,7 @@ export const OPTIONS = {
   },
   paidMail: {
     campaignName: {
+      type: "radio",
       id: "paid-mail-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
@@ -98,11 +112,13 @@ export const OPTIONS = {
   },
   paidSearch: {
     source: {
+      type: "radio",
       id: "paid-search-source",
       label: SOURCE_LABEL,
       options: [{ value: "google" }],
     },
     campaignName: {
+      type: "radio",
       id: "paid-search-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
@@ -110,11 +126,13 @@ export const OPTIONS = {
   },
   paidSocial: {
     source: {
+      type: "radio",
       id: "paid-social-source",
       label: SOURCE_LABEL,
       options: [{ value: "meta" }, { value: "youtube" }],
     },
     campaignName: {
+      type: "radio",
       id: "paid-social-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
@@ -122,11 +140,13 @@ export const OPTIONS = {
   },
   paidSms: {
     source: {
+      type: "radio",
       id: "paid-sms-source",
       label: SOURCE_LABEL,
       options: [{ value: "scaletowin" }],
     },
     campaignName: {
+      type: "radio",
       id: "paid-sms-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
