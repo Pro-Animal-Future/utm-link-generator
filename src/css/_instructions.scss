@@ -1,3 +1,4 @@
+@use "theme/colors";
 @use "theme/typography";
 
 dl {
@@ -15,9 +16,9 @@ dd {
   margin-bottom: 1.25rem;
   font-size: typography.$font-size-base;
   line-height: 1.5;
-  color: #555;
+  color: colors.$white-text;
 
   // Add a subtle left border for visual hierarchy
   padding-left: 1rem;
-  border-left: 3px solid #e5e5e5;
+  border-left: 3px solid colors.$white-text;
 }

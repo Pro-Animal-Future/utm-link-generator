@@ -1,4 +1,5 @@
 @use "theme/borders";
+@use "theme/colors";
 @use "theme/spacing";
 @use "theme/typography";
 
@@ -13,6 +14,9 @@ input {
   padding: 5px;
 
   font-size: typography.$font-size-base;
+
+  color: colors.$white-text;
+  background-color: colors.$form-gray-background;
 
   border: borders.$component-border;
   border-radius: borders.$border-radius;

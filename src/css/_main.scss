@@ -2,7 +2,8 @@
 @use "theme/typography";
 
 body {
-  background-color: colors.$white;
+  background-color: colors.$black-background;
+  color: colors.$white-text;
 
   overflow-y: auto;
 }
