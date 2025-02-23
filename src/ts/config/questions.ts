@@ -16,6 +16,8 @@ const ACCOUNT_NAME_OPTIONS = [
   { value: "nattiefulton" },
 ];
 
+const OTHER_OPTION = { value: "Other:", textInput: true };
+
 export const QUESTIONS = {
   url: {
     type: "freeform",
@@ -46,6 +48,11 @@ export const QUESTIONS = {
         { value: "substack" },
         { value: "mailchimp" },
         { value: "sendgrid" },
+        {
+          value: "Influencer/organization name:",
+          description: "E.g. 350colorado",
+          textInput: true,
+        },
       ],
     },
     campaignName: {
@@ -67,6 +74,7 @@ export const QUESTIONS = {
         { value: "poster" },
         { value: "sticker" },
         { value: "tablecloth" },
+        OTHER_OPTION,
       ],
     },
     campaignName: {
@@ -102,10 +110,18 @@ export const QUESTIONS = {
       ],
     },
   },
+  // NB: We use the HTML ID `paid-mailer` rather than `paid-mail` to avoid Safari
+  // thinking the text inputs are email addresses.
   paidMail: {
+    source: {
+      type: "freeform",
+      id: "paid-mailer-source",
+      label: SOURCE_LABEL,
+      description: "The direct mail vendor name, e.g. some_vendor",
+    },
     campaignName: {
       type: "radio",
-      id: "paid-mail-campaign-name",
+      id: "paid-mailer-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
     },
@@ -115,7 +131,7 @@ export const QUESTIONS = {
       type: "radio",
       id: "paid-search-source",
       label: SOURCE_LABEL,
-      options: [{ value: "google" }],
+      options: [{ value: "google" }, OTHER_OPTION],
     },
     campaignName: {
       type: "radio",
@@ -129,7 +145,7 @@ export const QUESTIONS = {
       type: "radio",
       id: "paid-social-source",
       label: SOURCE_LABEL,
-      options: [{ value: "meta" }, { value: "youtube" }],
+      options: [{ value: "meta" }, { value: "youtube" }, OTHER_OPTION],
     },
     campaignName: {
       type: "radio",
@@ -143,7 +159,7 @@ export const QUESTIONS = {
       type: "radio",
       id: "paid-sms-source",
       label: SOURCE_LABEL,
-      options: [{ value: "scaletowin" }],
+      options: [{ value: "scaletowin" }, OTHER_OPTION],
     },
     campaignName: {
       type: "radio",

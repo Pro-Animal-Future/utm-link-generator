@@ -195,6 +195,15 @@ function initPaidMailQuestions(
 ): void {
   const container = initMediumQuestionsDiv(form, formState, "paid_mail");
 
+  initFreeformQuestion(
+    container,
+    formState,
+    QUESTIONS.paidMail.source,
+    (value, priorState) => ({
+      paidMail: { ...priorState.paidMail, source: value },
+    }),
+  );
+
   initRadioQuestion(
     container,
     formState,

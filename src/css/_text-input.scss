@@ -20,9 +20,12 @@ input {
 
 .freeform-container {
   margin-bottom: 15px;
-  max-width: spacing.$question-max-width;
 
-  &:has(> #url) {
+  input {
+    max-width: spacing.$question-max-width;
+  }
+
+  &:has(> #url) input {
     max-width: unset;
   }
 }

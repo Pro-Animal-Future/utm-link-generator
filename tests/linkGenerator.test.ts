@@ -24,7 +24,7 @@ test.describe("generateLink()", () => {
       campaignName: "proanimaldc",
     },
     paidMail: {
-      source: undefined,
+      source: "my_vendor",
       campaignName: "lead_gen",
     },
     paidSearch: {
@@ -123,7 +123,7 @@ test.describe("generateLink()", () => {
     const mail: FormState = { ...DEFAULT, medium: "paid_mail" };
     expect(generateLink(mail)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_mail&utm_campaign=lead_gen`,
+      url: `${DEFAULT_URL}?utm_medium=paid_mail&utm_source=my_vendor&utm_campaign=lead_gen`,
     });
 
     expect(
@@ -133,7 +133,7 @@ test.describe("generateLink()", () => {
       }),
     ).toEqual({
       success: false,
-      errors: ['Missing "utm_campaign"'],
+      errors: ['Missing "utm_source"', 'Missing "utm_campaign"'],
     });
   });
 
