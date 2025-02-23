@@ -14,30 +14,44 @@ test.describe("generateLink()", () => {
     email: {
       source: "mailchimp",
       campaignName: "proanimaloregon",
+      id: undefined,
+      content: undefined,
     },
     field: {
       source: "poster",
       campaignName: "lead_gen",
+      id: undefined,
+      content: undefined,
     },
     organicSocial: {
       source: "instagram",
       campaignName: "proanimaldc",
+      id: undefined,
+      content: undefined,
     },
     paidMail: {
       source: "my_vendor",
       campaignName: "lead_gen",
+      id: undefined,
+      content: undefined,
     },
     paidSearch: {
       source: "google",
       campaignName: "lead_gen",
+      id: undefined,
+      content: undefined,
     },
     paidSocial: {
       source: "meta",
       campaignName: "lead_gen",
+      id: undefined,
+      content: undefined,
     },
     paidSms: {
       source: "scaletowin",
       campaignName: "lead_gen",
+      id: undefined,
+      content: undefined,
     },
   };
 
@@ -75,7 +89,12 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...email,
-        email: { source: undefined, campaignName: undefined },
+        email: {
+          source: undefined,
+          campaignName: undefined,
+          id: undefined,
+          content: undefined,
+        },
       }),
     ).toEqual({
       success: false,
@@ -93,7 +112,12 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...field,
-        field: { source: undefined, campaignName: undefined },
+        field: {
+          source: undefined,
+          campaignName: undefined,
+          id: undefined,
+          content: undefined,
+        },
       }),
     ).toEqual({
       success: false,
@@ -111,7 +135,12 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...social,
-        organicSocial: { source: undefined, campaignName: undefined },
+        organicSocial: {
+          source: undefined,
+          campaignName: undefined,
+          id: undefined,
+          content: undefined,
+        },
       }),
     ).toEqual({
       success: false,
@@ -129,7 +158,12 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...mail,
-        paidMail: { source: undefined, campaignName: undefined },
+        paidMail: {
+          source: undefined,
+          campaignName: undefined,
+          id: undefined,
+          content: undefined,
+        },
       }),
     ).toEqual({
       success: false,
@@ -147,7 +181,12 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...search,
-        paidSearch: { source: undefined, campaignName: undefined },
+        paidSearch: {
+          source: undefined,
+          campaignName: undefined,
+          id: undefined,
+          content: undefined,
+        },
       }),
     ).toEqual({
       success: false,
@@ -165,7 +204,12 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...social,
-        paidSocial: { source: undefined, campaignName: undefined },
+        paidSocial: {
+          source: undefined,
+          campaignName: undefined,
+          id: undefined,
+          content: undefined,
+        },
       }),
     ).toEqual({
       success: false,
@@ -183,7 +227,12 @@ test.describe("generateLink()", () => {
     expect(
       generateLink({
         ...sms,
-        paidSms: { source: undefined, campaignName: undefined },
+        paidSms: {
+          source: undefined,
+          campaignName: undefined,
+          id: undefined,
+          content: undefined,
+        },
       }),
     ).toEqual({
       success: false,
