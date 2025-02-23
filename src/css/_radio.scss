@@ -24,6 +24,8 @@
   border: borders.$component-border;
   border-radius: borders.$border-radius;
 
+  background-color: colors.$form-gray-background;
+
   max-width: spacing.$question-max-width;
   min-height: spacing.$min-touch-target;
   margin: 10px 0;
@@ -34,7 +36,7 @@
   flex-direction: column;
 
   &:hover {
-    background-color: colors.$hover-white;
+    background-color: colors.$hover-gray;
   }
 
   &::before {
@@ -47,7 +49,7 @@
     width: 20px;
     height: 20px;
     border-radius: 99rem;
-    box-shadow: 0 0 0 borders.$border-thickness colors.$black-translucent;
+    box-shadow: 0 0 0 borders.$border-thickness colors.$white-translucent;
   }
 
   &:has(+ .radio-text-input) {
