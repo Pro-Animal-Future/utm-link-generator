@@ -1,7 +1,16 @@
 import { OPTIONS } from "../config/options";
 import { Medium, FormState } from "../state/FormState";
 import Observable from "../state/Observable";
-import { generateRadioGroup, RadioGroup } from "./radio";
+import {
+  FreeformQuestion,
+  generateFreeformQuestion,
+  generateRadioQuestion,
+  RadioQuestion,
+} from "./question";
+
+// ------------------------------------------------------------
+// Generic helpers
+// ------------------------------------------------------------
 
 type UpdateFormStateFunction = (
   value: string | undefined,
@@ -36,60 +45,29 @@ const updateFormState =
     });
   };
 
-function initRadioGroup(
+function initRadioQuestion(
   parent: HTMLElement,
   formState: Observable<FormState>,
-  request: RadioGroup,
+  request: RadioQuestion,
   updateFn: UpdateFormStateFunction,
-  hideFn?: (state: FormState) => boolean,
 ): void {
-  const group = generateRadioGroup(request);
+  const group = generateRadioQuestion(request);
+  parent.appendChild(group);
 
   // We use 'input' rather than 'change' for better responsiveness with
   // radio options with text input.
   group.addEventListener("input", updateFormState(formState)(updateFn));
-  parent.appendChild(group);
-
-  if (hideFn) {
-    formState.subscribe((state) => {
-      const isHidden = hideFn(state);
-      group.hidden = isHidden;
-    });
-  }
 }
 
-function initUrl(
-  form: HTMLFormElement,
+function initFreeformQuestion(
+  parent: HTMLElement,
   formState: Observable<FormState>,
+  request: FreeformQuestion,
+  updateFn: UpdateFormStateFunction,
 ): void {
-  const container = document.createElement("div");
-  container.classList.add("url-container");
-  form.appendChild(container);
-
-  const label = document.createElement("label");
-  label.textContent = "PAF URL";
-  label.htmlFor = "url-input";
-  container.appendChild(label);
-
-  const input = document.createElement("input");
-  input.type = "url";
-  input.id = "url-input";
-  input.required = true;
-  container.appendChild(input);
-
-  input.addEventListener(
-    "input",
-    updateFormState(formState)((value) => ({ url: value?.trim() })),
-  );
-}
-
-function initMediumQuestion(
-  form: HTMLFormElement,
-  formState: Observable<FormState>,
-): void {
-  initRadioGroup(form, formState, OPTIONS.medium, (value) => ({
-    medium: value as Medium,
-  }));
+  const div = generateFreeformQuestion(request);
+  parent.appendChild(div);
+  div.addEventListener("input", updateFormState(formState)(updateFn));
 }
 
 function initMediumQuestionsDiv(
@@ -108,13 +86,35 @@ function initMediumQuestionsDiv(
   return container;
 }
 
+// ------------------------------------------------------------
+// Specific questions
+// ------------------------------------------------------------
+
+function initUrl(
+  form: HTMLFormElement,
+  formState: Observable<FormState>,
+): void {
+  initFreeformQuestion(form, formState, OPTIONS.url, (value) => ({
+    url: value?.trim(),
+  }));
+}
+
+function initMediumQuestion(
+  form: HTMLFormElement,
+  formState: Observable<FormState>,
+): void {
+  initRadioQuestion(form, formState, OPTIONS.medium, (value) => ({
+    medium: value as Medium,
+  }));
+}
+
 function initEmailOptions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
   const container = initMediumQuestionsDiv(form, formState, "email");
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.email.source,
@@ -123,7 +123,7 @@ function initEmailOptions(
     }),
   );
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.email.campaignName,
@@ -139,7 +139,7 @@ function initFieldOptions(
 ): void {
   const container = initMediumQuestionsDiv(form, formState, "field");
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.field.source,
@@ -148,7 +148,7 @@ function initFieldOptions(
     }),
   );
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.field.campaignName,
@@ -164,7 +164,7 @@ function initOrganicSocialOptions(
 ): void {
   const container = initMediumQuestionsDiv(form, formState, "organic_social");
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.organicSocial.source,
@@ -176,7 +176,7 @@ function initOrganicSocialOptions(
     }),
   );
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.organicSocial.campaignName,
@@ -195,7 +195,7 @@ function initPaidMailOptions(
 ): void {
   const container = initMediumQuestionsDiv(form, formState, "paid_mail");
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.paidMail.campaignName,
@@ -211,7 +211,7 @@ function initPaidSearchOptions(
 ): void {
   const container = initMediumQuestionsDiv(form, formState, "paid_search");
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.paidSearch.source,
@@ -220,7 +220,7 @@ function initPaidSearchOptions(
     }),
   );
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.paidSearch.campaignName,
@@ -236,7 +236,7 @@ function initPaidSocialOptions(
 ): void {
   const container = initMediumQuestionsDiv(form, formState, "paid_social");
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.paidSocial.source,
@@ -245,7 +245,7 @@ function initPaidSocialOptions(
     }),
   );
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.paidSocial.campaignName,
@@ -261,7 +261,7 @@ function initPaidSmsOptions(
 ): void {
   const container = initMediumQuestionsDiv(form, formState, "paid_sms");
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.paidSms.source,
@@ -270,7 +270,7 @@ function initPaidSmsOptions(
     }),
   );
 
-  initRadioGroup(
+  initRadioQuestion(
     container,
     formState,
     OPTIONS.paidSms.campaignName,
