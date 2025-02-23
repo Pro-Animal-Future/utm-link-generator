@@ -24,11 +24,18 @@ export type Question = RadioQuestion | FreeformQuestion;
 
 export const NONE_OPTION: RadioOption = { value: "Do not set this option" };
 
+function setToTextInput(input: HTMLInputElement): void {
+  input.type = "text";
+  input.autocapitalize = "none";
+  input.autocomplete = "off";
+  input.spellcheck = false;
+}
+
 function generateRadioTextInput(
   radioInput: HTMLInputElement,
 ): HTMLInputElement {
   const textInput = document.createElement("input");
-  textInput.type = "text";
+  setToTextInput(textInput);
   textInput.classList.add("radio-text-input");
   textInput.id = `${radioInput.id}-text`;
   textInput.name = textInput.id;
@@ -118,7 +125,11 @@ export function generateFreeformQuestion(
   container.appendChild(label);
 
   const input = document.createElement("input");
-  input.type = request.isUrl ? "url" : "text";
+  if (request.isUrl) {
+    input.type = "url";
+  } else {
+    setToTextInput(input);
+  }
   input.id = request.id;
   input.required = true;
   container.appendChild(input);
