@@ -29,12 +29,12 @@ const updateFormState =
     // need to instead always use the text input. For example, if you
     // click a radio button with a text input, we should use
     // the value from its text input rather than from the radio button itself.
-    let value = e.target.value || undefined;
+    let value = e.target.value.trim() || undefined;
     if (e.target.type === "radio" && e.target.checked) {
       const textInput =
         e.target.parentElement?.querySelector(".radio-text-input");
       if (textInput instanceof HTMLInputElement) {
-        value = textInput.value || undefined;
+        value = textInput.value.trim() || undefined;
       }
     }
 
@@ -95,7 +95,7 @@ function initUrlQuestion(
   formState: Observable<FormState>,
 ): void {
   initFreeformQuestion(form, formState, QUESTIONS.url, (value) => ({
-    url: value?.trim(),
+    url: value,
   }));
 }
 
