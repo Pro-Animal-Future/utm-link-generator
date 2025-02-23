@@ -1,7 +1,7 @@
-import { OPTIONS } from "../config/options";
+import { QUESTIONS } from "../config/questions";
 import Observable from "./Observable";
 
-export type Medium = (typeof OPTIONS)["medium"]["options"][number]["value"];
+export type Medium = (typeof QUESTIONS)["medium"]["options"][number]["value"];
 
 interface CommonOptions {
   source: string | undefined;

@@ -1,4 +1,4 @@
-import { OPTIONS } from "../config/options";
+import { QUESTIONS } from "../config/questions";
 import { Medium, FormState } from "../state/FormState";
 import Observable from "../state/Observable";
 import {
@@ -90,11 +90,11 @@ function initMediumQuestionsDiv(
 // Specific questions
 // ------------------------------------------------------------
 
-function initUrl(
+function initUrlQuestion(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  initFreeformQuestion(form, formState, OPTIONS.url, (value) => ({
+  initFreeformQuestion(form, formState, QUESTIONS.url, (value) => ({
     url: value?.trim(),
   }));
 }
@@ -103,12 +103,12 @@ function initMediumQuestion(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
-  initRadioQuestion(form, formState, OPTIONS.medium, (value) => ({
+  initRadioQuestion(form, formState, QUESTIONS.medium, (value) => ({
     medium: value as Medium,
   }));
 }
 
-function initEmailOptions(
+function initEmailQuestions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
@@ -117,7 +117,7 @@ function initEmailOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.email.source,
+    QUESTIONS.email.source,
     (value, priorState) => ({
       email: { ...priorState.email, source: value },
     }),
@@ -126,14 +126,14 @@ function initEmailOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.email.campaignName,
+    QUESTIONS.email.campaignName,
     (value, priorState) => ({
       email: { ...priorState.email, campaignName: value },
     }),
   );
 }
 
-function initFieldOptions(
+function initFieldQuestions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
@@ -142,7 +142,7 @@ function initFieldOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.field.source,
+    QUESTIONS.field.source,
     (value, priorState) => ({
       field: { ...priorState.field, source: value },
     }),
@@ -151,14 +151,14 @@ function initFieldOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.field.campaignName,
+    QUESTIONS.field.campaignName,
     (value, priorState) => ({
       field: { ...priorState.field, campaignName: value },
     }),
   );
 }
 
-function initOrganicSocialOptions(
+function initOrganicSocialQuestions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
@@ -167,7 +167,7 @@ function initOrganicSocialOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.organicSocial.source,
+    QUESTIONS.organicSocial.source,
     (value, priorState) => ({
       organicSocial: {
         ...priorState.organicSocial,
@@ -179,7 +179,7 @@ function initOrganicSocialOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.organicSocial.campaignName,
+    QUESTIONS.organicSocial.campaignName,
     (value, priorState) => ({
       organicSocial: {
         ...priorState.organicSocial,
@@ -189,7 +189,7 @@ function initOrganicSocialOptions(
   );
 }
 
-function initPaidMailOptions(
+function initPaidMailQuestions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
@@ -198,14 +198,14 @@ function initPaidMailOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.paidMail.campaignName,
+    QUESTIONS.paidMail.campaignName,
     (value, priorState) => ({
       paidMail: { ...priorState.paidMail, campaignName: value },
     }),
   );
 }
 
-function initPaidSearchOptions(
+function initPaidSearchQuestions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
@@ -214,7 +214,7 @@ function initPaidSearchOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.paidSearch.source,
+    QUESTIONS.paidSearch.source,
     (value, priorState) => ({
       paidSearch: { ...priorState.paidSearch, source: value },
     }),
@@ -223,14 +223,14 @@ function initPaidSearchOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.paidSearch.campaignName,
+    QUESTIONS.paidSearch.campaignName,
     (value, priorState) => ({
       paidSearch: { ...priorState.paidSearch, campaignName: value },
     }),
   );
 }
 
-function initPaidSocialOptions(
+function initPaidSocialQuestions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
@@ -239,7 +239,7 @@ function initPaidSocialOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.paidSocial.source,
+    QUESTIONS.paidSocial.source,
     (value, priorState) => ({
       paidSocial: { ...priorState.paidSocial, source: value },
     }),
@@ -248,14 +248,14 @@ function initPaidSocialOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.paidSocial.campaignName,
+    QUESTIONS.paidSocial.campaignName,
     (value, priorState) => ({
       paidSocial: { ...priorState.paidSocial, campaignName: value },
     }),
   );
 }
 
-function initPaidSmsOptions(
+function initPaidSmsQuestions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
 ): void {
@@ -264,7 +264,7 @@ function initPaidSmsOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.paidSms.source,
+    QUESTIONS.paidSms.source,
     (value, priorState) => ({
       paidSms: { ...priorState.paidSms, source: value },
     }),
@@ -273,7 +273,7 @@ function initPaidSmsOptions(
   initRadioQuestion(
     container,
     formState,
-    OPTIONS.paidSms.campaignName,
+    QUESTIONS.paidSms.campaignName,
     (value, priorState) => ({
       paidSms: { ...priorState.paidSms, campaignName: value },
     }),
@@ -282,13 +282,13 @@ function initPaidSmsOptions(
 
 export function initForm(formState: Observable<FormState>): void {
   const form = document.getElementById("utm-form") as HTMLFormElement;
-  initUrl(form, formState);
+  initUrlQuestion(form, formState);
   initMediumQuestion(form, formState);
-  initEmailOptions(form, formState);
-  initFieldOptions(form, formState);
-  initOrganicSocialOptions(form, formState);
-  initPaidMailOptions(form, formState);
-  initPaidSearchOptions(form, formState);
-  initPaidSocialOptions(form, formState);
-  initPaidSmsOptions(form, formState);
+  initEmailQuestions(form, formState);
+  initFieldQuestions(form, formState);
+  initOrganicSocialQuestions(form, formState);
+  initPaidMailQuestions(form, formState);
+  initPaidSearchQuestions(form, formState);
+  initPaidSocialQuestions(form, formState);
+  initPaidSmsQuestions(form, formState);
 }

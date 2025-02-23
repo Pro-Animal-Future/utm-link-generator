@@ -16,7 +16,7 @@ const ACCOUNT_NAME_OPTIONS = [
   { value: "nattiefulton" },
 ];
 
-export const OPTIONS = {
+export const QUESTIONS = {
   url: {
     type: "freeform",
     id: "url",

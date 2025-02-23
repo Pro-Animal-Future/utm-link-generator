@@ -2,7 +2,7 @@ import {
   CAMPAIGN_NAME_LABEL,
   MEDIUM_LABEL,
   SOURCE_LABEL,
-} from "./config/options";
+} from "./config/questions";
 import { FormState } from "./state/FormState";
 import Observable from "./state/Observable";
 
