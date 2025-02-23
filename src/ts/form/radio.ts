@@ -8,12 +8,21 @@ export interface RadioGroup {
   id: string;
   label: string;
   options: readonly RadioOption[];
+  optional?: boolean;
 }
 
-function linkRadioTextPair(
-  textInput: HTMLInputElement,
+export const NONE_OPTION: RadioOption = { value: "Do not set this option" };
+
+function generateRadioTextInput(
   radioInput: HTMLInputElement,
-): void {
+): HTMLInputElement {
+  const textInput = document.createElement("input");
+  textInput.type = "text";
+  textInput.classList.add("radio-text-input");
+  textInput.id = `${radioInput.id}-text`;
+  textInput.name = textInput.id;
+  textInput.setAttribute("aria-labelledby", radioInput.id);
+
   textInput.addEventListener("input", () => {
     radioInput.checked = true;
   });
@@ -23,6 +32,8 @@ function linkRadioTextPair(
       textInput.focus();
     }
   });
+
+  return textInput;
 }
 
 function generateRadioOption(
@@ -53,17 +64,10 @@ function generateRadioOption(
   }
   radioDiv.appendChild(label);
 
-  if (!option.textInput) return radioDiv;
-
-  const textInput = document.createElement("input");
-  textInput.type = "text";
-  textInput.classList.add("radio-text-input");
-  textInput.id = `${outerId}-${option.value}-text`;
-  textInput.name = textInput.id;
-  textInput.setAttribute("aria-labelledby", `${outerId}-${option.value}`);
-  radioDiv.appendChild(textInput);
-
-  linkRadioTextPair(textInput, radioInput);
+  if (option.textInput) {
+    const textInput = generateRadioTextInput(radioInput);
+    radioDiv.appendChild(textInput);
+  }
 
   return radioDiv;
 }
@@ -78,7 +82,10 @@ export function generateRadioGroup(request: RadioGroup): HTMLFieldSetElement {
   legend.classList.add("radio-legend");
   fieldSet.appendChild(legend);
 
-  request.options.forEach((option) => {
+  const allOptions = request.optional
+    ? [NONE_OPTION, ...request.options]
+    : request.options;
+  allOptions.forEach((option) => {
     const radioDiv = generateRadioOption(request.id, option);
     fieldSet.appendChild(radioDiv);
   });

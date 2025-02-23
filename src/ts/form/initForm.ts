@@ -4,7 +4,7 @@ import Observable from "../state/Observable";
 import { generateRadioGroup, RadioGroup } from "./radio";
 
 type UpdateFormStateFunction = (
-  value: string,
+  value: string | undefined,
   priorState: FormState,
 ) => Partial<FormState>;
 
@@ -20,12 +20,12 @@ const updateFormState =
     // need to instead always use the text input. For example, if you
     // click a radio button with a text input, we should use
     // the value from its text input rather than from the radio button itself.
-    let value = e.target.value;
+    let value = e.target.value || undefined;
     if (e.target.type === "radio" && e.target.checked) {
       const textInput =
         e.target.parentElement?.querySelector(".radio-text-input");
       if (textInput instanceof HTMLInputElement) {
-        value = textInput.value;
+        value = textInput.value || undefined;
       }
     }
 
@@ -79,7 +79,7 @@ function initUrl(
 
   input.addEventListener(
     "input",
-    updateFormState(formState)((value) => ({ url: value.trim() })),
+    updateFormState(formState)((value) => ({ url: value?.trim() })),
   );
 }
 
