@@ -1,2 +1,6 @@
 // https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
 $min-touch-target: 44px;
+
+// This number can be adjusted. It's to avoid
+// having overly noisy white space.
+$question-max-width: 340px;

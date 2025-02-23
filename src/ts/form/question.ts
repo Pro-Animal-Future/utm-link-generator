@@ -26,7 +26,7 @@ export const NONE_OPTION: RadioOption = { value: "Do not set this option" };
 
 function setToTextInput(input: HTMLInputElement): void {
   input.type = "text";
-  input.autocapitalize = "none";
+  input.setAttribute("autocapitalize", "none");
   input.autocomplete = "off";
   input.spellcheck = false;
 }
