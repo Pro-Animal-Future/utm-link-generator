@@ -25,9 +25,4 @@ input {
   &:has(> #url) {
     max-width: unset;
   }
-
-  label {
-    font-size: typography.$font-size-lg;
-    font-weight: 500;
-  }
 }

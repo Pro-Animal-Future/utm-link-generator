@@ -1,0 +1,16 @@
+@use "theme/typography";
+
+.radio-legend,
+.freeform-label {
+  font-size: typography.$font-size-lg;
+  font-weight: 500;
+}
+
+.freeform-description,
+.radio-legend-description {
+  display: block;
+  margin-top: 5px;
+  font-size: typography.$font-size-md;
+  font-weight: 400;
+  line-height: 1.4;
+}
