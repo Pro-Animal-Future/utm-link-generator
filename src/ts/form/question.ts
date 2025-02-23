@@ -7,6 +7,7 @@ export interface RadioOption {
 interface BaseQuestion {
   id: string;
   label: string;
+  description?: string;
 }
 
 export interface RadioQuestion extends BaseQuestion {
@@ -23,6 +24,22 @@ export interface FreeformQuestion extends BaseQuestion {
 export type Question = RadioQuestion | FreeformQuestion;
 
 export const NONE_OPTION: RadioOption = { value: "Do not set this option" };
+
+function setLabelAndDescription(
+  element: HTMLLegendElement | HTMLLabelElement,
+  label: string,
+  descriptionHtmlId: string,
+  description: string | undefined,
+): void {
+  const textNode = document.createTextNode(label);
+  element.appendChild(textNode);
+
+  if (!description) return;
+  const span = document.createElement("span");
+  span.textContent = description;
+  span.classList.add(descriptionHtmlId);
+  element.appendChild(span);
+}
 
 function setToTextInput(input: HTMLInputElement): void {
   input.type = "text";
@@ -72,14 +89,12 @@ function generateRadioOption(
   const label = document.createElement("label");
   label.htmlFor = radioInput.id;
   label.classList.add("radio-label");
-  const labelText = document.createTextNode(option.value);
-  label.appendChild(labelText);
-  if (option.description) {
-    const description = document.createElement("span");
-    description.textContent = option.description;
-    description.classList.add("radio-description");
-    label.appendChild(description);
-  }
+  setLabelAndDescription(
+    label,
+    option.value,
+    "radio-option-description",
+    option.description,
+  );
   radioDiv.appendChild(label);
 
   if (option.textInput) {
@@ -98,8 +113,13 @@ export function generateRadioQuestion(
   fieldSet.classList.add("radio-fieldset");
 
   const legend = document.createElement("legend");
-  legend.textContent = request.label;
   legend.classList.add("radio-legend");
+  setLabelAndDescription(
+    legend,
+    request.label,
+    "radio-legend-description",
+    request.description,
+  );
   fieldSet.appendChild(legend);
 
   const allOptions = request.optional
@@ -120,7 +140,12 @@ export function generateFreeformQuestion(
   container.classList.add("freeform-container");
 
   const label = document.createElement("label");
-  label.textContent = request.label;
+  setLabelAndDescription(
+    label,
+    request.label,
+    "freeform-description",
+    request.description,
+  );
   label.htmlFor = request.id;
   container.appendChild(label);
 

@@ -31,3 +31,11 @@ input {
     font-weight: 500;
   }
 }
+
+.freeform-description {
+  display: block;
+  margin-top: 5px;
+  font-size: typography.$font-size-md;
+  font-weight: 400;
+  line-height: 1.4;
+}

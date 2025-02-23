@@ -72,10 +72,18 @@
   }
 }
 
-.radio-description {
+.radio-option-description {
   display: block;
   margin-top: 8px;
   font-size: typography.$font-size-base;
+}
+
+.radio-legend-description {
+  display: block;
+  margin-top: 5px;
+  font-size: typography.$font-size-md;
+  font-weight: 400;
+  line-height: 1.4;
 }
 
 .radio-text-input {
