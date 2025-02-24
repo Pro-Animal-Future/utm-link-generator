@@ -1,6 +1,8 @@
 export const MEDIUM_LABEL = "utm_medium";
 export const SOURCE_LABEL = "utm_source";
 export const CAMPAIGN_NAME_LABEL = "utm_campaign";
+export const ID_LABEL = "utm_id";
+export const CONTENT_LABEL = "utm_content";
 
 const CAMPAIGN_PURPOSE_OPTIONS = [
   { value: "fundraising" },
@@ -23,6 +25,7 @@ export const QUESTIONS = {
     type: "freeform",
     id: "url",
     label: "PAF URL",
+    description: "Tip: copy and paste the URL to avoid typos",
     isUrl: true,
   },
   medium: {
@@ -39,10 +42,12 @@ export const QUESTIONS = {
       { value: "paid_sms" },
     ],
   },
+  // NB: We use the HTML ID `eml` rather than `email` to avoid Safari
+  // thinking the text inputs are email addresses.
   email: {
     source: {
       type: "radio",
-      id: "email-source",
+      id: "eml-source",
       label: SOURCE_LABEL,
       options: [
         { value: "substack" },
@@ -57,9 +62,30 @@ export const QUESTIONS = {
     },
     campaignName: {
       type: "radio",
-      id: "email-campaign-name",
+      id: "eml-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      options: ACCOUNT_NAME_OPTIONS,
+      options: [
+        ...ACCOUNT_NAME_OPTIONS,
+        { value: "Other sender:", textInput: true },
+      ],
+    },
+    id: {
+      type: "radio",
+      id: "eml-id",
+      label: ID_LABEL,
+      optional: true,
+      options: [
+        { value: "activist_drip" },
+        { value: "donor_drip" },
+        { value: "voter_drip" },
+      ],
+    },
+    content: {
+      type: "radio",
+      id: "eml-content",
+      label: CONTENT_LABEL,
+      optional: true,
+      options: [{ value: "Subject line:", textInput: true }],
     },
   },
   field: {
@@ -82,6 +108,30 @@ export const QUESTIONS = {
       id: "field-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
+    },
+    id: {
+      type: "radio",
+      id: "field-id",
+      label: ID_LABEL,
+      options: [
+        { value: "clackamas" },
+        { value: "denver" },
+        { value: "portland" },
+        {
+          value: "Other municipality:",
+          description: "e.g. san_antonio",
+          textInput: true,
+        },
+      ],
+    },
+    content: {
+      type: "radio",
+      id: "field-content",
+      label: CONTENT_LABEL,
+      optional: true,
+      options: [
+        { value: "Name of specific design or location:", textInput: true },
+      ],
     },
   },
   organicSocial: {
@@ -109,6 +159,24 @@ export const QUESTIONS = {
         { value: "FB/Nextdoor group name:", textInput: true },
       ],
     },
+    id: {
+      type: "radio",
+      id: "organic-social-id",
+      label: ID_LABEL,
+      options: [
+        { value: "bio", description: "The link is to a bio/profile" },
+        { value: "post", description: "The link is to a post" },
+      ],
+    },
+    content: {
+      type: "radio",
+      id: "organic-social-content",
+      label: CONTENT_LABEL,
+      optional: true,
+      options: [
+        { value: "Name of a specific post, video, or story:", textInput: true },
+      ],
+    },
   },
   // NB: We use the HTML ID `paid-mailer` rather than `paid-mail` to avoid Safari
   // thinking the text inputs are email addresses.
@@ -125,6 +193,20 @@ export const QUESTIONS = {
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
     },
+    id: {
+      type: "radio",
+      id: "paid-mailer-id",
+      label: ID_LABEL,
+      optional: true,
+      options: [{ value: "Audience segment:", textInput: true }],
+    },
+    content: {
+      type: "radio",
+      id: "paid-mailer-content",
+      label: CONTENT_LABEL,
+      optional: true,
+      options: [{ value: "Mailer design's name:", textInput: true }],
+    },
   },
   paidSearch: {
     source: {
@@ -138,6 +220,20 @@ export const QUESTIONS = {
       id: "paid-search-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
+    },
+    id: {
+      type: "radio",
+      id: "paid-search-id",
+      label: ID_LABEL,
+      optional: true,
+      options: [{ value: "Ad group:", textInput: true }],
+    },
+    content: {
+      type: "radio",
+      id: "paid-search-content",
+      label: CONTENT_LABEL,
+      optional: true,
+      options: [{ value: "Ad variation's name:", textInput: true }],
     },
   },
   paidSocial: {
@@ -153,6 +249,20 @@ export const QUESTIONS = {
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
     },
+    id: {
+      type: "radio",
+      id: "paid-social-id",
+      label: ID_LABEL,
+      optional: true,
+      options: [{ value: "Ad set or ad group:", textInput: true }],
+    },
+    content: {
+      type: "radio",
+      id: "paid-social-content",
+      label: CONTENT_LABEL,
+      optional: true,
+      options: [{ value: "Ad variation's name:", textInput: true }],
+    },
   },
   paidSms: {
     source: {
@@ -166,6 +276,20 @@ export const QUESTIONS = {
       id: "paid-sms-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: CAMPAIGN_PURPOSE_OPTIONS,
+    },
+    id: {
+      type: "radio",
+      id: "paid-sms-id",
+      label: ID_LABEL,
+      optional: true,
+      options: [{ value: "Audience segment:", textInput: true }],
+    },
+    content: {
+      type: "radio",
+      id: "paid-sms-content",
+      label: CONTENT_LABEL,
+      optional: true,
+      options: [{ value: "Text blast's name:", textInput: true }],
     },
   },
 } as const;

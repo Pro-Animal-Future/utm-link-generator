@@ -1,16 +1,19 @@
 import {
   CAMPAIGN_NAME_LABEL,
+  CONTENT_LABEL,
+  ID_LABEL,
   MEDIUM_LABEL,
   SOURCE_LABEL,
 } from "./config/questions";
 import { FormState } from "./state/FormState";
+import { NONE_OPTION } from "./form/question";
 import Observable from "./state/Observable";
 
-function generateUtmString(
+export function generateUtmString(
   paramMap: Record<string, string | undefined>,
 ): string {
   const params = Object.entries(paramMap)
-    .filter(([, value]) => value !== undefined)
+    .filter(([, value]) => value !== undefined && value !== NONE_OPTION.value)
     .map(([key, value]) => `utm_${key}=${encodeURIComponent(value!)}`);
   return params.length > 0 ? `?${params.join("&")}` : "";
 }
@@ -62,6 +65,8 @@ export function generateLink(state: FormState): Result {
   // Check for required fields.
   if (!options.source) errors.push(`Missing "${SOURCE_LABEL}"`);
   if (!options.campaignName) errors.push(`Missing "${CAMPAIGN_NAME_LABEL}"`);
+  if (!options.id) errors.push(`Missing "${ID_LABEL}"`);
+  if (!options.content) errors.push(`Missing "${CONTENT_LABEL}"`);
 
   const queryParam = generateUtmString({
     medium: state.medium,

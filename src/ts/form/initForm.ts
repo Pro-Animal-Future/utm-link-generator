@@ -131,6 +131,24 @@ function initEmailQuestions(
       email: { ...priorState.email, campaignName: value },
     }),
   );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.email.id,
+    (value, priorState) => ({
+      email: { ...priorState.email, id: value },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.email.content,
+    (value, priorState) => ({
+      email: { ...priorState.email, content: value },
+    }),
+  );
 }
 
 function initFieldQuestions(
@@ -154,6 +172,24 @@ function initFieldQuestions(
     QUESTIONS.field.campaignName,
     (value, priorState) => ({
       field: { ...priorState.field, campaignName: value },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.field.id,
+    (value, priorState) => ({
+      field: { ...priorState.field, id: value },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.field.content,
+    (value, priorState) => ({
+      field: { ...priorState.field, content: value },
     }),
   );
 }
@@ -187,6 +223,30 @@ function initOrganicSocialQuestions(
       },
     }),
   );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.organicSocial.id,
+    (value, priorState) => ({
+      organicSocial: {
+        ...priorState.organicSocial,
+        id: value,
+      },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.organicSocial.content,
+    (value, priorState) => ({
+      organicSocial: {
+        ...priorState.organicSocial,
+        content: value,
+      },
+    }),
+  );
 }
 
 function initPaidMailQuestions(
@@ -210,6 +270,24 @@ function initPaidMailQuestions(
     QUESTIONS.paidMail.campaignName,
     (value, priorState) => ({
       paidMail: { ...priorState.paidMail, campaignName: value },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.paidMail.id,
+    (value, priorState) => ({
+      paidMail: { ...priorState.paidMail, id: value },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.paidMail.content,
+    (value, priorState) => ({
+      paidMail: { ...priorState.paidMail, content: value },
     }),
   );
 }
@@ -237,6 +315,24 @@ function initPaidSearchQuestions(
       paidSearch: { ...priorState.paidSearch, campaignName: value },
     }),
   );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.paidSearch.id,
+    (value, priorState) => ({
+      paidSearch: { ...priorState.paidSearch, id: value },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.paidSearch.content,
+    (value, priorState) => ({
+      paidSearch: { ...priorState.paidSearch, content: value },
+    }),
+  );
 }
 
 function initPaidSocialQuestions(
@@ -262,6 +358,24 @@ function initPaidSocialQuestions(
       paidSocial: { ...priorState.paidSocial, campaignName: value },
     }),
   );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.paidSocial.id,
+    (value, priorState) => ({
+      paidSocial: { ...priorState.paidSocial, id: value },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.paidSocial.content,
+    (value, priorState) => ({
+      paidSocial: { ...priorState.paidSocial, content: value },
+    }),
+  );
 }
 
 function initPaidSmsQuestions(
@@ -285,6 +399,24 @@ function initPaidSmsQuestions(
     QUESTIONS.paidSms.campaignName,
     (value, priorState) => ({
       paidSms: { ...priorState.paidSms, campaignName: value },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.paidSms.id,
+    (value, priorState) => ({
+      paidSms: { ...priorState.paidSms, id: value },
+    }),
+  );
+
+  initRadioQuestion(
+    container,
+    formState,
+    QUESTIONS.paidSms.content,
+    (value, priorState) => ({
+      paidSms: { ...priorState.paidSms, content: value },
     }),
   );
 }
