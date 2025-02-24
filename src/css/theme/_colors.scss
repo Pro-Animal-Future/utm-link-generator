@@ -1,12 +1,17 @@
-$white: hsl(0, 0%, 100%);
-$black: hsl(0, 0%, 0%);
-$blue: hsl(217, 91%, 60%);
-
-$white-text: hsl(0, 0%, 88%);
-$black-background: hsl(0, 0%, 7%);
-$form-gray-background: hsl(0, 0%, 18%);
-
+$white: hsla(0, 0%, 100%);
 $white-translucent: hsla(0, 0%, 100%, 0.4);
+$white-text: hsl(0, 0%, 88%);
+
+$black-background: hsl(0, 0%, 7%);
+
+$gray-background: hsl(0, 0%, 18%);
+$hover-gray: hsl(0, 0%, 22%);
+
+$blue: hsl(217, 91%, 60%);
 $blue-translucent: hsla(217, 91%, 60%, 0.1);
 
-$hover-gray: hsl(0, 0%, 22%);
+$red-background: hsla(0, 60%, 20%, 0.2);
+$red-highlight: hsla(0, 60%, 50%, 0.6);
+
+$green-background: hsla(143, 60%, 15%, 0.2);
+$green-highlight: hsla(143, 65%, 45%, 0.65);

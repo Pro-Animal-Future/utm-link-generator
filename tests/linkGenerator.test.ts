@@ -88,7 +88,7 @@ test.describe("generateLink()", () => {
   test("missing medium", () => {
     expect(generateLink({ ...DEFAULT, medium: undefined })).toEqual({
       success: false,
-      errors: ['Missing "utm_medium"'],
+      errors: ["Missing utm_medium"],
     });
   });
 
@@ -112,10 +112,10 @@ test.describe("generateLink()", () => {
     ).toEqual({
       success: false,
       errors: [
-        'Missing "utm_source"',
-        'Missing "utm_campaign"',
-        'Missing "utm_id"',
-        'Missing "utm_content"',
+        "Missing utm_source",
+        "Missing utm_campaign",
+        "Missing utm_id",
+        "Missing utm_content",
       ],
     });
   });
@@ -140,10 +140,10 @@ test.describe("generateLink()", () => {
     ).toEqual({
       success: false,
       errors: [
-        'Missing "utm_source"',
-        'Missing "utm_campaign"',
-        'Missing "utm_id"',
-        'Missing "utm_content"',
+        "Missing utm_source",
+        "Missing utm_campaign",
+        "Missing utm_id",
+        "Missing utm_content",
       ],
     });
   });
@@ -168,10 +168,10 @@ test.describe("generateLink()", () => {
     ).toEqual({
       success: false,
       errors: [
-        'Missing "utm_source"',
-        'Missing "utm_campaign"',
-        'Missing "utm_id"',
-        'Missing "utm_content"',
+        "Missing utm_source",
+        "Missing utm_campaign",
+        "Missing utm_id",
+        "Missing utm_content",
       ],
     });
   });
@@ -196,10 +196,10 @@ test.describe("generateLink()", () => {
     ).toEqual({
       success: false,
       errors: [
-        'Missing "utm_source"',
-        'Missing "utm_campaign"',
-        'Missing "utm_id"',
-        'Missing "utm_content"',
+        "Missing utm_source",
+        "Missing utm_campaign",
+        "Missing utm_id",
+        "Missing utm_content",
       ],
     });
   });
@@ -224,10 +224,10 @@ test.describe("generateLink()", () => {
     ).toEqual({
       success: false,
       errors: [
-        'Missing "utm_source"',
-        'Missing "utm_campaign"',
-        'Missing "utm_id"',
-        'Missing "utm_content"',
+        "Missing utm_source",
+        "Missing utm_campaign",
+        "Missing utm_id",
+        "Missing utm_content",
       ],
     });
   });
@@ -252,10 +252,10 @@ test.describe("generateLink()", () => {
     ).toEqual({
       success: false,
       errors: [
-        'Missing "utm_source"',
-        'Missing "utm_campaign"',
-        'Missing "utm_id"',
-        'Missing "utm_content"',
+        "Missing utm_source",
+        "Missing utm_campaign",
+        "Missing utm_id",
+        "Missing utm_content",
       ],
     });
   });
@@ -280,10 +280,10 @@ test.describe("generateLink()", () => {
     ).toEqual({
       success: false,
       errors: [
-        'Missing "utm_source"',
-        'Missing "utm_campaign"',
-        'Missing "utm_id"',
-        'Missing "utm_content"',
+        "Missing utm_source",
+        "Missing utm_campaign",
+        "Missing utm_id",
+        "Missing utm_content",
       ],
     });
   });
