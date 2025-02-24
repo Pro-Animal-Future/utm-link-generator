@@ -64,7 +64,7 @@
   &::before {
     box-shadow:
       0 0 0 borders.$border-thickness colors.$blue,
-      inset 0 0 0 borders.$border-thickness colors.$white;
+      inset 0 0 0 borders.$border-thickness colors.$gray-background;
     background-color: colors.$blue;
   }
 }
