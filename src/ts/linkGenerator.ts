@@ -48,7 +48,7 @@ export function generateLink(state: FormState): Result {
   }
 
   if (!state.medium) {
-    errors.push(`Missing "${MEDIUM_LABEL}"`);
+    errors.push(`Missing ${MEDIUM_LABEL}`);
     return { success: false, errors };
   }
 
@@ -63,10 +63,10 @@ export function generateLink(state: FormState): Result {
   }[state.medium];
 
   // Check for required fields.
-  if (!options.source) errors.push(`Missing "${SOURCE_LABEL}"`);
-  if (!options.campaignName) errors.push(`Missing "${CAMPAIGN_NAME_LABEL}"`);
-  if (!options.id) errors.push(`Missing "${ID_LABEL}"`);
-  if (!options.content) errors.push(`Missing "${CONTENT_LABEL}"`);
+  if (!options.source) errors.push(`Missing ${SOURCE_LABEL}`);
+  if (!options.campaignName) errors.push(`Missing ${CAMPAIGN_NAME_LABEL}`);
+  if (!options.id) errors.push(`Missing ${ID_LABEL}`);
+  if (!options.content) errors.push(`Missing ${CONTENT_LABEL}`);
 
   const queryParam = generateUtmString({
     medium: state.medium,
