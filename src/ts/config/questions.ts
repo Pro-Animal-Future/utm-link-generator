@@ -37,7 +37,6 @@ export const QUESTIONS = {
       { value: "field" },
       { value: "organic_social" },
       { value: "paid_mail" },
-      { value: "paid_search" },
       { value: "paid_social" },
       { value: "paid_sms" },
     ],
@@ -206,34 +205,6 @@ export const QUESTIONS = {
       label: CONTENT_LABEL,
       optional: true,
       options: [{ value: "Mailer design's name:", textInput: true }],
-    },
-  },
-  paidSearch: {
-    source: {
-      type: "radio",
-      id: "paid-search-source",
-      label: SOURCE_LABEL,
-      options: [{ value: "google" }, OTHER_OPTION],
-    },
-    campaignName: {
-      type: "radio",
-      id: "paid-search-campaign-name",
-      label: CAMPAIGN_NAME_LABEL,
-      options: CAMPAIGN_PURPOSE_OPTIONS,
-    },
-    id: {
-      type: "radio",
-      id: "paid-search-id",
-      label: ID_LABEL,
-      optional: true,
-      options: [{ value: "Ad group:", textInput: true }],
-    },
-    content: {
-      type: "radio",
-      id: "paid-search-content",
-      label: CONTENT_LABEL,
-      optional: true,
-      options: [{ value: "Ad variation's name:", textInput: true }],
     },
   },
   paidSocial: {

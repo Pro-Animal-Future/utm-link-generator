@@ -292,49 +292,6 @@ function initPaidMailQuestions(
   );
 }
 
-function initPaidSearchQuestions(
-  form: HTMLFormElement,
-  formState: Observable<FormState>,
-): void {
-  const container = initMediumQuestionsDiv(form, formState, "paid_search");
-
-  initRadioQuestion(
-    container,
-    formState,
-    QUESTIONS.paidSearch.source,
-    (value, priorState) => ({
-      paidSearch: { ...priorState.paidSearch, source: value },
-    }),
-  );
-
-  initRadioQuestion(
-    container,
-    formState,
-    QUESTIONS.paidSearch.campaignName,
-    (value, priorState) => ({
-      paidSearch: { ...priorState.paidSearch, campaignName: value },
-    }),
-  );
-
-  initRadioQuestion(
-    container,
-    formState,
-    QUESTIONS.paidSearch.id,
-    (value, priorState) => ({
-      paidSearch: { ...priorState.paidSearch, id: value },
-    }),
-  );
-
-  initRadioQuestion(
-    container,
-    formState,
-    QUESTIONS.paidSearch.content,
-    (value, priorState) => ({
-      paidSearch: { ...priorState.paidSearch, content: value },
-    }),
-  );
-}
-
 function initPaidSocialQuestions(
   form: HTMLFormElement,
   formState: Observable<FormState>,
@@ -429,7 +386,6 @@ export function initForm(formState: Observable<FormState>): void {
   initFieldQuestions(form, formState);
   initOrganicSocialQuestions(form, formState);
   initPaidMailQuestions(form, formState);
-  initPaidSearchQuestions(form, formState);
   initPaidSocialQuestions(form, formState);
   initPaidSmsQuestions(form, formState);
 }
