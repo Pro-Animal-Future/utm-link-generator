@@ -57,7 +57,6 @@ export function generateLink(state: FormState): Result {
     field: state.field,
     organic_social: state.organicSocial,
     paid_mail: state.paidMail,
-    paid_search: state.paidSearch,
     paid_social: state.paidSocial,
     paid_sms: state.paidSms,
   }[state.medium];

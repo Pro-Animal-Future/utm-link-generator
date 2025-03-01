@@ -17,7 +17,6 @@ export interface FormState {
   field: Options;
   organicSocial: Options;
   paidMail: Options;
-  paidSearch: Options;
   paidSocial: Options;
   paidSms: Options;
 }
@@ -36,7 +35,6 @@ export function initFormState(): Observable<FormState> {
     field: createOptions(),
     organicSocial: createOptions(),
     paidMail: createOptions(),
-    paidSearch: createOptions(),
     paidSocial: createOptions(),
     paidSms: createOptions(),
   });

@@ -48,12 +48,6 @@ test.describe("generateLink()", () => {
       id: "some_id",
       content: "some_content",
     },
-    paidSearch: {
-      source: "google",
-      campaignName: "lead_gen",
-      id: "some_id",
-      content: "some_content",
-    },
     paidSocial: {
       source: "meta",
       campaignName: "lead_gen",
@@ -187,34 +181,6 @@ test.describe("generateLink()", () => {
       generateLink({
         ...mail,
         paidMail: {
-          source: undefined,
-          campaignName: undefined,
-          id: undefined,
-          content: undefined,
-        },
-      }),
-    ).toEqual({
-      success: false,
-      errors: [
-        "Missing utm_source",
-        "Missing utm_campaign",
-        "Missing utm_id",
-        "Missing utm_content",
-      ],
-    });
-  });
-
-  test("paid search options", () => {
-    const search: FormState = { ...DEFAULT, medium: "paid_search" };
-    expect(generateLink(search)).toEqual({
-      success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_search&utm_source=google&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
-    });
-
-    expect(
-      generateLink({
-        ...search,
-        paidSearch: {
           source: undefined,
           campaignName: undefined,
           id: undefined,
