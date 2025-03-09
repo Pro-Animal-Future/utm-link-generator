@@ -11,13 +11,6 @@ const CAMPAIGN_PURPOSE_OPTIONS = [
   { value: "voter_persuasion" },
 ] as const;
 
-const ACCOUNT_NAME_OPTIONS = [
-  { value: "proanimalcolorado" },
-  { value: "proanimalfuture" },
-  { value: "proanimaloregon" },
-  { value: "nattiefulton" },
-];
-
 const OTHER_OPTION = { value: "Other:", textInput: true };
 
 export const QUESTIONS = {
@@ -149,9 +142,20 @@ export const QUESTIONS = {
       id: "organic-social-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: [
-        ...ACCOUNT_NAME_OPTIONS,
-        { value: "Partner handle:", textInput: true },
-        { value: "FB/Nextdoor group name:", textInput: true },
+        { value: "proanimalcolorado" },
+        { value: "proanimalfuture" },
+        { value: "proanimaloregon" },
+        { value: "nattiefulton" },
+        {
+          value: "Influencer/organization name:",
+          description: "E.g. 350_colorado or farm_sanctuary",
+          textInput: true,
+        },
+        {
+          value: "FB/Nextdoor group name:",
+          description: "E.g. denver_vegans or hawthorne",
+          textInput: true,
+        },
       ],
     },
     id: {
@@ -159,8 +163,14 @@ export const QUESTIONS = {
       id: "organic-social-id",
       label: ID_LABEL,
       options: [
-        { value: "bio", description: "The link is to a bio/profile" },
-        { value: "post", description: "The link is to a post" },
+        {
+          value: "bio",
+          description: "The link will be added to a bio/profile",
+        },
+        {
+          value: "post",
+          description: "The link will be added to a post/story/video",
+        },
       ],
     },
     content: {
@@ -169,7 +179,11 @@ export const QUESTIONS = {
       label: CONTENT_LABEL,
       optional: true,
       options: [
-        { value: "Name of a specific post, video, or story:", textInput: true },
+        {
+          value: "Description of the post/video/story:",
+          description: "E.g. campaign_kickoff_recruitment_feb_13",
+          textInput: true,
+        },
       ],
     },
   },
