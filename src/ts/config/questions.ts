@@ -54,7 +54,7 @@ export const QUESTIONS = {
         { value: "sendgrid" },
         {
           value: "Influencer/organization name:",
-          description: "E.g. 350colorado",
+          description: "E.g. 350_colorado or farm_sanctuary",
           textInput: true,
         },
       ],
@@ -64,8 +64,11 @@ export const QUESTIONS = {
       id: "eml-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
       options: [
-        ...ACCOUNT_NAME_OPTIONS,
-        { value: "Other sender:", textInput: true },
+        {
+          value: "Subject line:",
+          description: "E.g. new_event_march_15",
+          textInput: true,
+        },
       ],
     },
     id: {
@@ -74,17 +77,10 @@ export const QUESTIONS = {
       label: ID_LABEL,
       optional: true,
       options: [
-        { value: "activist_drip" },
+        { value: "colorado_activist_drip" },
         { value: "donor_drip" },
-        { value: "voter_drip" },
+        { value: "oregon_activist_drip" },
       ],
-    },
-    content: {
-      type: "radio",
-      id: "eml-content",
-      label: CONTENT_LABEL,
-      optional: true,
-      options: [{ value: "Subject line:", textInput: true }],
     },
   },
   field: {

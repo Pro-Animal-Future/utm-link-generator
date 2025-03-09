@@ -140,15 +140,6 @@ function initEmailQuestions(
       email: { ...priorState.email, id: value },
     }),
   );
-
-  initRadioQuestion(
-    container,
-    formState,
-    QUESTIONS.email.content,
-    (value, priorState) => ({
-      email: { ...priorState.email, content: value },
-    }),
-  );
 }
 
 function initFieldQuestions(

@@ -23,7 +23,7 @@ export interface FreeformQuestion extends BaseQuestion {
 
 export type Question = RadioQuestion | FreeformQuestion;
 
-export const NONE_OPTION: RadioOption = { value: "Do not set this option" };
+export const NONE_OPTION: RadioOption = { value: "Skip this parameter" };
 
 function setLabelAndDescription(
   element: HTMLLegendElement | HTMLLabelElement,
