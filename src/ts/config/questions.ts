@@ -53,16 +53,10 @@ export const QUESTIONS = {
       ],
     },
     campaignName: {
-      type: "radio",
+      type: "freeform",
       id: "eml-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      options: [
-        {
-          value: "Subject line:",
-          description: "E.g. new_event_march_15",
-          textInput: true,
-        },
-      ],
+      description: "Subject line, e.g. new_event_march_15",
     },
     id: {
       type: "radio",

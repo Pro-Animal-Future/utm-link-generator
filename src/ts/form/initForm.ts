@@ -123,7 +123,7 @@ function initEmailQuestions(
     }),
   );
 
-  initRadioQuestion(
+  initFreeformQuestion(
     container,
     formState,
     QUESTIONS.email.campaignName,
