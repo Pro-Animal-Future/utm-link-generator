@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 
 import type { FormState } from "../src/ts/state/FormState";
 import {
+  escapeUtmValue,
   generateLink,
   generateUtmString,
 } from "../src/ts/result/linkGenerator";
@@ -16,6 +17,23 @@ test("generateUtmString ignores None option", () => {
   };
   expect(generateUtmString(input)).toEqual(
     "?utm_medium=email&utm_content=some_content",
+  );
+});
+
+test("escapeUtmValue()", () => {
+  const assertEscaped = (input: string, expected: string) =>
+    expect(escapeUtmValue(input)).toEqual(expected);
+
+  // If it's already in the expected format, don't mess with it
+  assertEscaped("value", "value");
+  assertEscaped("value123", "value123");
+  assertEscaped("value_123_abc", "value_123_abc");
+
+  assertEscaped("Value", "value");
+  assertEscaped("sOME    words123", "some_words_123");
+  assertEscaped(
+    "abc-xyz!? 'with' \"quotes---and@ALL",
+    "abc_xyz_with_quotes_and_all",
   );
 });
 
