@@ -55,7 +55,7 @@ export default function initResult(formState: Observable<FormState>): void {
   formState.subscribe((state) => {
     const result = generateLink(state);
     errorContainer.hidden = result.success;
-    successContainer.hidden = !result.success;
+    successContainer.style.display = result.success ? "flex" : "none";
     if (result.success) {
       setUrl(result.url);
     } else {
