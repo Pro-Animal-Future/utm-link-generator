@@ -56,7 +56,9 @@ export const QUESTIONS = {
       type: "freeform",
       id: "eml-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      description: "Subject line, e.g. new_event_march_15",
+      description:
+        "Copy and paste the subject line, e.g. Imagine " +
+        "If Politicians Had to Listen to Animal Advocates",
     },
     id: {
       type: "radio",
@@ -179,8 +181,8 @@ export const QUESTIONS = {
       optional: true,
       options: [
         {
-          value: "Description of the post/video/story:",
-          description: "E.g. campaign_kickoff_recruitment_feb_13",
+          value: "Description of the post, video, or story:",
+          description: "E.g. campaign kickoff recruitment Feb 13",
           textInput: true,
         },
       ],

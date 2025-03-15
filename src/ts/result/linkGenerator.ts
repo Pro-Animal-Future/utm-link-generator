@@ -8,12 +8,34 @@ import {
 import type { FormState } from "../state/FormState";
 import { NONE_OPTION } from "../form/question";
 
+export function escapeUtmValue(value: string): string {
+  // Note that we use encodeURIComponent as backup if there are cases
+  // that haven't been considered. That at least guarantees the URL
+  // will be valid, even if it's not UTM format.
+
+  // If it's already in the expected format, return as is
+  if (/^[a-z0-9_]+$/.test(value)) {
+    return encodeURIComponent(value);
+  }
+
+  let result = value.toLowerCase();
+  // Add underscore between letters and numbers
+  result = result.replace(/([a-z])(\d)/g, "$1_$2");
+  // Replace all non-alphanumeric chars with underscores
+  result = result.replace(/[^a-z0-9]/g, "_");
+  // Replace multiple consecutive underscores with a single one
+  result = result.replace(/_+/g, "_");
+  // Remove leading and trailing underscores
+  result = result.replace(/^_+|_+$/g, "");
+  return encodeURIComponent(result);
+}
+
 export function generateUtmString(
   paramMap: Record<string, string | undefined>,
 ): string {
   const params = Object.entries(paramMap)
     .filter(([, value]) => value !== undefined && value !== NONE_OPTION.value)
-    .map(([key, value]) => `utm_${key}=${encodeURIComponent(value!)}`);
+    .map(([key, value]) => `utm_${key}=${escapeUtmValue(value!)}`);
   return params.length > 0 ? `?${params.join("&")}` : "";
 }
 
