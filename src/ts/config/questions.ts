@@ -82,7 +82,7 @@ export const QUESTIONS = {
         { value: "poster" },
         { value: "sticker" },
         { value: "tablecloth" },
-        OTHER_OPTION,
+        { ...OTHER_OPTION, description: "e.g. restaurant_qr" },
       ],
     },
     campaignName: {
@@ -100,8 +100,8 @@ export const QUESTIONS = {
         { value: "denver" },
         { value: "portland" },
         {
-          value: "Other municipality:",
-          description: "e.g. san_antonio",
+          value: "Other municipality/county:",
+          description: "e.g. vancouver or ft_collins",
           textInput: true,
         },
       ],
@@ -112,7 +112,12 @@ export const QUESTIONS = {
       label: CONTENT_LABEL,
       optional: true,
       options: [
-        { value: "Name of specific design or location:", textInput: true },
+        {
+          value: "Location:",
+          description: "e.g. wellness_sushi",
+          textInput: true,
+        },
+        { value: "Design:", description: "e.g. red_fox1", textInput: true },
       ],
     },
   },
@@ -194,21 +199,42 @@ export const QUESTIONS = {
       type: "radio",
       id: "paid-mailer-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      options: CAMPAIGN_PURPOSE_OPTIONS,
+      options: [
+        { value: "clackamas" },
+        { value: "denver" },
+        { value: "portland" },
+        {
+          value: "Other municipality/county:",
+          description: "e.g. dc or st_louis",
+          textInput: true,
+        },
+      ],
     },
     id: {
       type: "radio",
       id: "paid-mailer-id",
       label: ID_LABEL,
       optional: true,
-      options: [{ value: "Audience segment:", textInput: true }],
+      options: [
+        {
+          value: "Specific audience segment:",
+          description: "e.g. denver_voters_under_25",
+          textInput: true,
+        },
+      ],
     },
     content: {
       type: "radio",
       id: "paid-mailer-content",
       label: CONTENT_LABEL,
       optional: true,
-      options: [{ value: "Mailer design's name:", textInput: true }],
+      options: [
+        {
+          value: "Mailer description:",
+          description: "e.g. fur_farming_cruelty",
+          textInput: true,
+        },
+      ],
     },
   },
   paidSocial: {
@@ -216,27 +242,37 @@ export const QUESTIONS = {
       type: "radio",
       id: "paid-social-source",
       label: SOURCE_LABEL,
-      options: [{ value: "meta" }, { value: "youtube" }, OTHER_OPTION],
+      options: [
+        { value: "meta" },
+        { value: "youtube" },
+        { ...OTHER_OPTION, description: "e.g. reddit" },
+      ],
     },
     campaignName: {
-      type: "radio",
+      type: "freeform",
       id: "paid-social-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      options: CAMPAIGN_PURPOSE_OPTIONS,
+      description: "Campaign name",
     },
     id: {
       type: "radio",
       id: "paid-social-id",
       label: ID_LABEL,
       optional: true,
-      options: [{ value: "Ad set or ad group:", textInput: true }],
+      options: [
+        {
+          value: "Ad set or ad group:",
+          description: "e.g. vote_pro_animal",
+          textInput: true,
+        },
+      ],
     },
     content: {
       type: "radio",
       id: "paid-social-content",
       label: CONTENT_LABEL,
       optional: true,
-      options: [{ value: "Ad variation's name:", textInput: true }],
+      options: [{ value: "Ad name:", textInput: true }],
     },
   },
   paidSms: {

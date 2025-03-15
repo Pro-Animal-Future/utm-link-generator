@@ -298,7 +298,7 @@ function initPaidSocialQuestions(
     }),
   );
 
-  initRadioQuestion(
+  initFreeformQuestion(
     container,
     formState,
     QUESTIONS.paidSocial.campaignName,
