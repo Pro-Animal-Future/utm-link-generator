@@ -2,6 +2,38 @@ import Observable from "../state/Observable";
 import type { FormState } from "../state/FormState";
 import { generateLink } from "./linkGenerator";
 
+async function copyToClipboard(value: string): Promise<void> {
+  try {
+    await navigator.clipboard.writeText(value);
+  } catch (err) {
+    console.error("Failed to write to clipboard: ", err);
+  }
+}
+
+function switchCopyIcons(container: HTMLElement): void {
+  const linkIcon = container.querySelector<SVGElement>("svg.copy-icon");
+  const checkIcon = container.querySelector<SVGElement>("svg.check-icon");
+  if (!linkIcon || !checkIcon) return;
+
+  linkIcon.style.display = "none";
+  checkIcon.style.display = "inline-block";
+  setTimeout(() => {
+    linkIcon.style.display = "inline-block";
+    checkIcon.style.display = "none";
+  }, 1500);
+}
+
+function setUrl(url: string): void {
+  document.querySelector("#generated-link")!.textContent = url;
+  const copyButton = document.querySelector(
+    "#success-container .copy-button",
+  ) as HTMLElement;
+  copyButton.addEventListener("click", async () => {
+    await copyToClipboard(url);
+    switchCopyIcons(copyButton);
+  });
+}
+
 function addErrors(errors: string[]): void {
   const ul = document.getElementById("error-list") as HTMLUListElement;
   ul.replaceChildren(
@@ -25,8 +57,7 @@ export default function initResult(formState: Observable<FormState>): void {
     errorContainer.hidden = result.success;
     successContainer.hidden = !result.success;
     if (result.success) {
-      successContainer.querySelector("#generated-link")!.textContent =
-        result.url;
+      setUrl(result.url);
     } else {
       addErrors(result.errors);
     }
