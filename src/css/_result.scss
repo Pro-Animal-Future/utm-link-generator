@@ -1,13 +1,11 @@
 @use "theme/borders";
 @use "theme/colors";
+@use "theme/spacing";
 @use "theme/typography";
 
 .error-container,
 .success-container {
   font-size: typography.$font-size-md;
-
-  max-width: max-content;
-  word-break: break-all;
 
   margin-top: 30px;
   padding: 10px 15px;
@@ -27,4 +25,26 @@
 .success-container {
   background-color: colors.$green-background;
   border-left: 3px solid colors.$green-highlight;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px;
+
+  #generated-link {
+    flex: 0 1 auto;
+    word-break: break-all;
+    padding: 10px 15px;
+    margin-bottom: 0px;
+  }
+
+  .copy-button {
+    flex-shrink: 0;
+    height: spacing.$min-touch-target;
+    width: spacing.$min-touch-target;
+
+    &:hover {
+      background-color: colors.$hover-gray;
+    }
+  }
 }
