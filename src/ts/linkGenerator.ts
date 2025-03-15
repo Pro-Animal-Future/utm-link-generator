@@ -79,35 +79,33 @@ export function generateLink(state: FormState): Result {
     : { success: true, url: `${state.url}${queryParam}` };
 }
 
-function generateSuccess(url: string): HTMLElement[] {
-  const p = document.createElement("p");
-  p.textContent = url;
-  return [p];
-}
-
-function generateErrors(errors: string[]): HTMLElement[] {
-  const p = document.createElement("p");
-  p.textContent = "Cannot generate link:";
-
-  const ul = document.createElement("ul");
-  errors.forEach((err) => {
-    const li = document.createElement("li");
-    li.textContent = err;
-    ul.appendChild(li);
-  });
-  return [p, ul];
+function addErrors(errors: string[]): void {
+  const ul = document.getElementById("error-list") as HTMLUListElement;
+  ul.replaceChildren(
+    ...errors.map((err) => {
+      const li = document.createElement("li");
+      li.textContent = err;
+      return li;
+    }),
+  );
 }
 
 export function subscribeLinkGenerator(formState: Observable<FormState>): void {
-  const container = document.getElementById(
-    "result-container",
+  const errorContainer = document.getElementById(
+    "error-container",
+  ) as HTMLDivElement;
+  const successContainer = document.getElementById(
+    "success-container",
   ) as HTMLDivElement;
   formState.subscribe((state) => {
     const result = generateLink(state);
+    errorContainer.hidden = result.success;
+    successContainer.hidden = !result.success;
     if (result.success) {
-      container.replaceChildren(...generateSuccess(result.url));
+      successContainer.querySelector("#generated-link")!.textContent =
+        result.url;
     } else {
-      container.replaceChildren(...generateErrors(result.errors));
+      addErrors(result.errors);
     }
   });
 }
