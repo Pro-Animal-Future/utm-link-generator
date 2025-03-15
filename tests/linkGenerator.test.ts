@@ -74,7 +74,7 @@ test.describe("generateLink()", () => {
       generateLink({ ...DEFAULT, url: "https://proanimal.org a13b" }),
     ).toEqual({
       success: false,
-      errors: ["Invalid URL"],
+      errors: ["Invalid URL. Make sure it starts with https://"],
     });
     expect(
       generateLink({ ...DEFAULT, url: "http://another-site.org?a=1" }),
