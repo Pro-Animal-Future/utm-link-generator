@@ -2,7 +2,8 @@
 @use "theme/colors";
 @use "theme/typography";
 
-.result-container {
+.error-container,
+.success-container {
   font-size: typography.$font-size-md;
 
   max-width: max-content;
@@ -12,18 +13,18 @@
   padding: 10px 15px;
 
   border-radius: borders.$border-radius;
+}
 
-  &:has(ul) {
-    background-color: colors.$red-background;
-    border-left: 3px solid colors.$red-highlight;
-  }
-
-  &:not(:has(ul)) {
-    background-color: colors.$green-background;
-    border-left: 3px solid colors.$green-highlight;
-  }
+.error-container {
+  background-color: colors.$red-background;
+  border-left: 3px solid colors.$red-highlight;
 
   ul {
     opacity: 0.8;
   }
+}
+
+.success-container {
+  background-color: colors.$green-background;
+  border-left: 3px solid colors.$green-highlight;
 }
