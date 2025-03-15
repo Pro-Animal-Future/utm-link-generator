@@ -1,7 +1,10 @@
 import { expect, test } from "@playwright/test";
 
 import type { FormState } from "../src/ts/state/FormState";
-import { generateLink, generateUtmString } from "../src/ts/linkGenerator";
+import {
+  generateLink,
+  generateUtmString,
+} from "../src/ts/result/linkGenerator";
 import { NONE_OPTION } from "../src/ts/form/question";
 
 test("generateUtmString ignores None option", () => {

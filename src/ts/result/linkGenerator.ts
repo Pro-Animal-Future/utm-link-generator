@@ -4,10 +4,9 @@ import {
   ID_LABEL,
   MEDIUM_LABEL,
   SOURCE_LABEL,
-} from "./config/questions";
-import { FormState } from "./state/FormState";
-import { NONE_OPTION } from "./form/question";
-import Observable from "./state/Observable";
+} from "../config/questions";
+import type { FormState } from "../state/FormState";
+import { NONE_OPTION } from "../form/question";
 
 export function generateUtmString(
   paramMap: Record<string, string | undefined>,
@@ -77,35 +76,4 @@ export function generateLink(state: FormState): Result {
   return errors.length
     ? { success: false, errors }
     : { success: true, url: `${state.url}${queryParam}` };
-}
-
-function addErrors(errors: string[]): void {
-  const ul = document.getElementById("error-list") as HTMLUListElement;
-  ul.replaceChildren(
-    ...errors.map((err) => {
-      const li = document.createElement("li");
-      li.textContent = err;
-      return li;
-    }),
-  );
-}
-
-export function subscribeLinkGenerator(formState: Observable<FormState>): void {
-  const errorContainer = document.getElementById(
-    "error-container",
-  ) as HTMLDivElement;
-  const successContainer = document.getElementById(
-    "success-container",
-  ) as HTMLDivElement;
-  formState.subscribe((state) => {
-    const result = generateLink(state);
-    errorContainer.hidden = result.success;
-    successContainer.hidden = !result.success;
-    if (result.success) {
-      successContainer.querySelector("#generated-link")!.textContent =
-        result.url;
-    } else {
-      addErrors(result.errors);
-    }
-  });
 }
