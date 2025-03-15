@@ -70,15 +70,38 @@ test.describe("generateLink()", () => {
       success: false,
       errors: ["Missing URL"],
     });
-    expect(generateLink({ ...DEFAULT, url: "proanimal.org" })).toEqual({
-      success: false,
-      errors: ["URL must start with https://"],
-    });
     expect(
       generateLink({ ...DEFAULT, url: "https://proanimal.org a13b" }),
     ).toEqual({
       success: false,
       errors: ["Invalid URL"],
+    });
+    expect(
+      generateLink({ ...DEFAULT, url: "http://another-site.org?a=1" }),
+    ).toEqual({
+      success: false,
+      errors: [
+        "URL must start with https://, but was http://",
+        "Domain name must be a PAF site or Stampede, but was another-site.org",
+        "URL should not already have search parameters (the text starting with '?' at the end of the URL)",
+      ],
+    });
+
+    // Ensure we don't have false positives
+    expect(
+      generateLink({ ...DEFAULT, url: "https://proanimalnevada.org" }),
+    ).toEqual({
+      success: true,
+      url: "https://proanimalnevada.org?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon&utm_id=some_id&utm_content=some_content",
+    });
+    expect(
+      generateLink({
+        ...DEFAULT,
+        url: "https://stampede.proanimal.org/page#some-anchor",
+      }),
+    ).toEqual({
+      success: true,
+      url: "https://stampede.proanimal.org/page#some-anchor?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon&utm_id=some_id&utm_content=some_content",
     });
   });
 

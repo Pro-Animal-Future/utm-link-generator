@@ -24,18 +24,36 @@ type Result =
 function validateUrl(url: string | undefined): Result {
   if (!url) {
     return { success: false, errors: ["Missing URL"] };
-  } else {
-    if (!url.startsWith("https://")) {
-      return { success: false, errors: ["URL must start with https://"] };
-    }
-    try {
-      new URL(url);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (_) {
-      return { success: false, errors: ["Invalid URL"] };
-    }
   }
-  return { success: true, url: url };
+
+  let parsed;
+  try {
+    parsed = new URL(url);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
+    return { success: false, errors: ["Invalid URL"] };
+  }
+
+  const errors = [];
+  if (parsed.protocol !== "https:") {
+    errors.push(`URL must start with https://, but was ${parsed.protocol}//`);
+  }
+  if (
+    !parsed.hostname.includes("proanimal") ||
+    !parsed.hostname.endsWith(".org")
+  ) {
+    errors.push(
+      `Domain name must be a PAF site or Stampede, but was ${parsed.hostname}`,
+    );
+  }
+  if (parsed.search || parsed.href.endsWith("?")) {
+    errors.push(
+      "URL should not already have search parameters (the text starting with '?' " +
+        "at the end of the URL)",
+    );
+  }
+
+  return errors.length ? { success: false, errors } : { success: true, url };
 }
 
 export function generateLink(state: FormState): Result {
