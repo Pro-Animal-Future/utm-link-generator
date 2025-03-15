@@ -31,7 +31,10 @@ function validateUrl(url: string | undefined): Result {
     parsed = new URL(url);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {
-    return { success: false, errors: ["Invalid URL"] };
+    return {
+      success: false,
+      errors: ["Invalid URL. Make sure it starts with https://"],
+    };
   }
 
   const errors = [];
