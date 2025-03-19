@@ -4,11 +4,15 @@ export const CAMPAIGN_NAME_LABEL = "utm_campaign";
 export const ID_LABEL = "utm_id";
 export const CONTENT_LABEL = "utm_content";
 
-const CAMPAIGN_PURPOSE_OPTIONS = [
-  { value: "fundraising" },
-  { value: "lead_gen" },
-  { value: "recruitment" },
-  { value: "voter_persuasion" },
+const LOCATION_OPTIONS = [
+  { value: "clackamas" },
+  { value: "denver" },
+  { value: "portland" },
+  {
+    value: "Other municipality/county:",
+    description: "e.g. vancouver or ft_collins",
+    textInput: true,
+  },
 ] as const;
 
 const OTHER_OPTION = { value: "Other:", textInput: true };
@@ -91,21 +95,18 @@ export const QUESTIONS = {
       type: "radio",
       id: "field-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      options: CAMPAIGN_PURPOSE_OPTIONS,
+      options: LOCATION_OPTIONS,
     },
     id: {
       type: "radio",
       id: "field-id",
       label: ID_LABEL,
+      optional: true,
       options: [
-        { value: "clackamas" },
-        { value: "denver" },
-        { value: "portland" },
-        {
-          value: "Other municipality/county:",
-          description: "e.g. vancouver or ft_collins",
-          textInput: true,
-        },
+        { value: "fundraising" },
+        { value: "lead_gen" },
+        { value: "recruitment" },
+        { value: "voter_persuasion" },
       ],
     },
     content: {
@@ -201,16 +202,7 @@ export const QUESTIONS = {
       type: "radio",
       id: "paid-mailer-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      options: [
-        { value: "clackamas" },
-        { value: "denver" },
-        { value: "portland" },
-        {
-          value: "Other municipality/county:",
-          description: "e.g. dc or st_louis",
-          textInput: true,
-        },
-      ],
+      options: LOCATION_OPTIONS,
     },
     id: {
       type: "radio",
@@ -254,7 +246,7 @@ export const QUESTIONS = {
       type: "freeform",
       id: "paid-social-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      description: "Campaign name",
+      description: "Campaign name, e.g. denver_voter_persuasion",
     },
     id: {
       type: "radio",
@@ -274,7 +266,13 @@ export const QUESTIONS = {
       id: "paid-social-content",
       label: CONTENT_LABEL,
       optional: true,
-      options: [{ value: "Ad name:", textInput: true }],
+      options: [
+        {
+          value: "Ad name:",
+          description: "e.g. activist_testimonials",
+          textInput: true,
+        },
+      ],
     },
   },
   paidSms: {
@@ -282,27 +280,42 @@ export const QUESTIONS = {
       type: "radio",
       id: "paid-sms-source",
       label: SOURCE_LABEL,
-      options: [{ value: "scaletowin" }, OTHER_OPTION],
+      options: [
+        { value: "scaletowin" },
+        { ...OTHER_OPTION, description: "e.g. callhub" },
+      ],
     },
     campaignName: {
       type: "radio",
       id: "paid-sms-campaign-name",
       label: CAMPAIGN_NAME_LABEL,
-      options: CAMPAIGN_PURPOSE_OPTIONS,
+      options: LOCATION_OPTIONS,
     },
     id: {
       type: "radio",
       id: "paid-sms-id",
       label: ID_LABEL,
       optional: true,
-      options: [{ value: "Audience segment:", textInput: true }],
+      options: [
+        {
+          value: "Specific audience segment:",
+          description: "e.g. denver_voters_over_50",
+          textInput: true,
+        },
+      ],
     },
     content: {
       type: "radio",
       id: "paid-sms-content",
       label: CONTENT_LABEL,
       optional: true,
-      options: [{ value: "Text blast's name:", textInput: true }],
+      options: [
+        {
+          value: "Text blast's name:",
+          description: "e.g. end_fur_farming",
+          textInput: true,
+        },
+      ],
     },
   },
 } as const;
