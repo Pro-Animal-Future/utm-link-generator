@@ -8,6 +8,7 @@ const LOCATION_OPTIONS = [
   { value: "clackamas" },
   { value: "denver" },
   { value: "portland" },
+  { value: "dc" },
   {
     value: "Other municipality/county:",
     description: "e.g. vancouver or ft_collins",
@@ -147,6 +148,7 @@ export const QUESTIONS = {
         { value: "proanimalcolorado" },
         { value: "proanimalfuture" },
         { value: "proanimaloregon" },
+        { value: "proanimaldc" },
         { value: "nattiefulton" },
         {
           value: "Influencer/organization name:",
