@@ -6,9 +6,9 @@ export const CONTENT_LABEL = "utm_content";
 
 const LOCATION_OPTIONS = [
   { value: "clackamas" },
+  { value: "dc" },
   { value: "denver" },
   { value: "portland" },
-  { value: "dc" },
   {
     value: "Other municipality/county:",
     description: "e.g. vancouver or ft_collins",
@@ -146,9 +146,9 @@ export const QUESTIONS = {
       label: CAMPAIGN_NAME_LABEL,
       options: [
         { value: "proanimalcolorado" },
+        { value: "proanimaldc" },
         { value: "proanimalfuture" },
         { value: "proanimaloregon" },
-        { value: "proanimaldc" },
         { value: "nattiefulton" },
         {
           value: "Influencer/organization name:",
