@@ -72,7 +72,10 @@ export const QUESTIONS = {
       optional: true,
       options: [
         { value: "colorado_activist_drip" },
+        { value: "dc_activist_drip" },
         { value: "donor_drip" },
+        { value: "foie_petition_drip" },
+        { value: "new_subscriber_drip" },
         { value: "oregon_activist_drip" },
       ],
     },
