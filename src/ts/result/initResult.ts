@@ -34,7 +34,7 @@ function setUrl(url: string): void {
   });
 }
 
-function addErrors(errors: string[]): void {
+function setErrors(errors: string[]): void {
   const ul = document.getElementById("error-list") as HTMLUListElement;
   ul.replaceChildren(
     ...errors.map((err) => {
@@ -59,7 +59,7 @@ export default function initResult(formState: Observable<FormState>): void {
     if (result.success) {
       setUrl(result.url);
     } else {
-      addErrors(result.errors);
+      setErrors(result.errors);
     }
   });
 }

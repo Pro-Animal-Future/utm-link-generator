@@ -30,20 +30,24 @@ export function escapeUtmValue(value: string): string {
   return encodeURIComponent(result);
 }
 
-export function generateUtmString(
+export function addUtmString(
+  url: URL,
   paramMap: Record<string, string | undefined>,
 ): string {
-  const params = Object.entries(paramMap)
+  const clonedUrl = new URL(url);
+  Object.entries(paramMap)
     .filter(([, value]) => value !== undefined && value !== NONE_OPTION.value)
-    .map(([key, value]) => `utm_${key}=${escapeUtmValue(value!)}`);
-  return params.length > 0 ? `?${params.join("&")}` : "";
+    .forEach(([key, value]) => {
+      clonedUrl.searchParams.set(`utm_${key}`, escapeUtmValue(value!));
+    });
+  return clonedUrl.toString();
 }
 
-type Result =
-  | { success: true; url: string }
+type Result<T> =
+  | { success: true; url: T }
   | { success: false; errors: string[] };
 
-function validateUrl(url: string | undefined): Result {
+function validateUrl(url: string | undefined): Result<URL> {
   if (!url) {
     return { success: false, errors: ["Missing URL"] };
   }
@@ -71,17 +75,13 @@ function validateUrl(url: string | undefined): Result {
       `Domain name must be a PAF site or Stampede, but was ${parsed.hostname}`,
     );
   }
-  if (parsed.search || parsed.href.endsWith("?")) {
-    errors.push(
-      "URL should not already have search parameters (the text starting with '?' " +
-        "at the end of the URL)",
-    );
-  }
 
-  return errors.length ? { success: false, errors } : { success: true, url };
+  return errors.length
+    ? { success: false, errors }
+    : { success: true, url: parsed };
 }
 
-export function generateLink(state: FormState): Result {
+export function generateLink(state: FormState): Result<string> {
   const errors: string[] = [];
 
   const urlResult = validateUrl(state.url);
@@ -109,14 +109,19 @@ export function generateLink(state: FormState): Result {
   if (!options.id) errors.push(`Missing ${ID_LABEL}`);
   if (!options.content) errors.push(`Missing ${CONTENT_LABEL}`);
 
-  const queryParam = generateUtmString({
+  if (errors.length) {
+    return { success: false, errors };
+  }
+  if (!urlResult.success) {
+    throw new Error("Assumption error: urlResult.sucess should be true");
+  }
+
+  const enrichedUrl = addUtmString(urlResult.url, {
     medium: state.medium,
     source: options.source,
     campaign: options.campaignName,
     id: options.id,
     content: options.content,
   });
-  return errors.length
-    ? { success: false, errors }
-    : { success: true, url: `${state.url}${queryParam}` };
+  return { success: true, url: enrichedUrl };
 }
