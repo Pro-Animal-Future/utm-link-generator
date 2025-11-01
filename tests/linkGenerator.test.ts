@@ -4,19 +4,19 @@ import type { FormState } from "../src/ts/state/FormState";
 import {
   escapeUtmValue,
   generateLink,
-  generateUtmString,
+  addUtmString,
 } from "../src/ts/result/linkGenerator";
 import { NONE_OPTION } from "../src/ts/form/question";
 
-test("generateUtmString ignores None option", () => {
+test("addUtmString ignores None option", () => {
   const input = {
     medium: "email",
     campaign: undefined,
     id: NONE_OPTION.value,
     content: "some_content",
   };
-  expect(generateUtmString(input)).toEqual(
-    "?utm_medium=email&utm_content=some_content",
+  expect(addUtmString(new URL("https://foo.com?existing=1"), input)).toEqual(
+    "https://foo.com/?existing=1&utm_medium=email&utm_content=some_content",
   );
 });
 
@@ -101,7 +101,6 @@ test.describe("generateLink()", () => {
       errors: [
         "URL must start with https://, but was http://",
         "Domain name must be a PAF site or Stampede, but was another-site.org",
-        "URL should not already have search parameters (the text starting with '?' at the end of the URL)",
       ],
     });
 
@@ -110,7 +109,7 @@ test.describe("generateLink()", () => {
       generateLink({ ...DEFAULT, url: "https://proanimalnevada.org" }),
     ).toEqual({
       success: true,
-      url: "https://proanimalnevada.org?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon&utm_id=some_id&utm_content=some_content",
+      url: "https://proanimalnevada.org/?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon&utm_id=some_id&utm_content=some_content",
     });
     expect(
       generateLink({
@@ -119,7 +118,7 @@ test.describe("generateLink()", () => {
       }),
     ).toEqual({
       success: true,
-      url: "https://stampede.proanimal.org/page#some-anchor?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon&utm_id=some_id&utm_content=some_content",
+      url: "https://stampede.proanimal.org/page?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon&utm_id=some_id&utm_content=some_content#some-anchor",
     });
   });
 
@@ -134,7 +133,7 @@ test.describe("generateLink()", () => {
     const email: FormState = { ...DEFAULT, medium: "email" };
     expect(generateLink(email)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon&utm_id=some_id&utm_content=some_content`,
+      url: `${DEFAULT_URL}/?utm_medium=email&utm_source=mailchimp&utm_campaign=proanimaloregon&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -162,7 +161,7 @@ test.describe("generateLink()", () => {
     const field: FormState = { ...DEFAULT, medium: "field" };
     expect(generateLink(field)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=field&utm_source=poster&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
+      url: `${DEFAULT_URL}/?utm_medium=field&utm_source=poster&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -190,7 +189,7 @@ test.describe("generateLink()", () => {
     const social: FormState = { ...DEFAULT, medium: "organic_social" };
     expect(generateLink(social)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=organic_social&utm_source=instagram&utm_campaign=proanimaldc&utm_id=some_id&utm_content=some_content`,
+      url: `${DEFAULT_URL}/?utm_medium=organic_social&utm_source=instagram&utm_campaign=proanimaldc&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -218,7 +217,7 @@ test.describe("generateLink()", () => {
     const mail: FormState = { ...DEFAULT, medium: "paid_mail" };
     expect(generateLink(mail)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_mail&utm_source=my_vendor&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
+      url: `${DEFAULT_URL}/?utm_medium=paid_mail&utm_source=my_vendor&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -246,7 +245,7 @@ test.describe("generateLink()", () => {
     const social: FormState = { ...DEFAULT, medium: "paid_social" };
     expect(generateLink(social)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_social&utm_source=meta&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
+      url: `${DEFAULT_URL}/?utm_medium=paid_social&utm_source=meta&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
@@ -274,7 +273,7 @@ test.describe("generateLink()", () => {
     const sms: FormState = { ...DEFAULT, medium: "paid_sms" };
     expect(generateLink(sms)).toEqual({
       success: true,
-      url: `${DEFAULT_URL}?utm_medium=paid_sms&utm_source=scaletowin&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
+      url: `${DEFAULT_URL}/?utm_medium=paid_sms&utm_source=scaletowin&utm_campaign=lead_gen&utm_id=some_id&utm_content=some_content`,
     });
 
     expect(
